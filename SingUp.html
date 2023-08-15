@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.login-container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Seu cabeçalho aqui -->
+    </header>
+
+    <header>
+        <!-- Seu cabeçalho aqui -->
+    </header>
+
+    <main>
+        <h1>Sign Up</h1>
+        <form id="signup-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Sign Up</button>
+        </form>
+    </main>
+
+
+   
+        <script>
+ const signupForm = document.getElementById('signup-form');
+
+signupForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const username = signupForm.username.value;
+    const email = signupForm.email.value;
+    const password = signupForm.password.value;
+    
+    // Aqui você pode implementar a lógica para criar uma conta
+    // Por exemplo, adicionar as informações do usuário a um banco de dados
+    
+    alert('Conta criada com sucesso!');
+    // Redirecionar para a página de login após a inscrição
+    window.location.href = 'Login.html'; // Substitua pelo nome da sua página de login
+});
+
+    </script>
+      <footer>
+
+    </footer>
+</body>
+</html>
