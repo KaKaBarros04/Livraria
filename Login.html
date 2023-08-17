@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./imagem/logo1.png">
     <title>Login</title>
     <style>
         body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #444;
     margin: 0;
     padding: 0;
     display: flex;
@@ -17,7 +18,7 @@
 }
 
 .login-container {
-    background-color: #fff;
+    background-color: #212121;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -25,10 +26,14 @@
 }
 
 h2 {
+    color: #ffffff;
     text-align: center;
     margin-bottom: 20px;
 }
 
+h5 {
+    color: #ffffff;
+}
 form {
     display: flex;
     flex-direction: column;
@@ -37,6 +42,7 @@ form {
 label {
     margin-bottom: 5px;
     font-weight: bold;
+    color: #ffffff;
 }
 
 input {
@@ -47,8 +53,8 @@ input {
 }
 
 button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #f6ff00;
+    color: #000000;
     border: none;
     border-radius: 4px;
     padding: 10px;
@@ -57,9 +63,17 @@ button {
     transition: background-color 0.3s;
 }
 
+
+
 button:hover {
-    background-color: #0056b3;
+    background-color: #ffffff;
 }
+
+a {
+    text-decoration: none;
+    color: #f6ff00;
+}
+
 
 
 
@@ -72,15 +86,17 @@ button:hover {
     </header>
 
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>Entrar</h2>
         <form id="login-form">
             <label for="username">Usuário:</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" placeholder="Seu usuário..." autofocus>
             
             <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" placeholder="Sua senha..." required>
             
             <button type="submit">Entrar</button>
+
+            <h5>Não tem conta? <a class="link" href="SingUp.html">Registe-se aqui!</a></h5>
         </form>
     </div>
 
@@ -97,7 +113,7 @@ loginForm.addEventListener('submit', function(event) {
     // Aqui você pode implementar a lógica de autenticação
     // Por exemplo, verificar se o usuário e a senha estão corretos
     
-    if (username === 'KaKa04' && password === 'kd438126') {
+    if (username === 'mcv' && password === 'maraeka') {
         alert('Login bem-sucedido!');
         // Redirecionar para a página de dashboard ou outra página após o login
         window.location.href = 'Home.html'; // Substitua pelo nome da sua página principal

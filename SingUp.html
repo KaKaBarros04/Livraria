@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <link rel="icon" href="./imagem/logo1.png">
+    <title>Regista-se</title>
     <style>
         body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #444;
     margin: 0;
     padding: 0;
     display: flex;
@@ -17,7 +18,7 @@
 }
 
 .login-container {
-    background-color: #fff;
+    background-color: #212121;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -25,8 +26,13 @@
 }
 
 h2 {
+    color: #ffffff;
     text-align: center;
     margin-bottom: 20px;
+}
+
+h5 {
+    color: #ffffff;
 }
 
 form {
@@ -37,6 +43,7 @@ form {
 label {
     margin-bottom: 5px;
     font-weight: bold;
+    color: #ffffff;
 }
 
 input {
@@ -47,8 +54,8 @@ input {
 }
 
 button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #f6ff00;
+    color: #000000;
     border: none;
     border-radius: 4px;
     padding: 10px;
@@ -58,38 +65,37 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #ffffff;
 }
 
-
-
+a {
+    text-decoration: none;
+    color: #f6ff00;
+}
 
     </style>
 </head>
 <body>
     <header>
-        <!-- Seu cabeçalho aqui -->
     </header>
 
-    <header>
-        <!-- Seu cabeçalho aqui -->
-    </header>
 
-    <main>
-        <h1>Sign Up</h1>
+    <div class="login-container">
+        <h2>Regista-se</h2>
         <form id="signup-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" placeholder="Seu usuario..." autofocus>
             
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" placeholder="Seu email..." autofocus>
             
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" placeholder="Sua senha..." required>
             
-            <button type="submit">Sign Up</button>
+            <button type="submit">Registar</button>
+            <h5>Já tem uma conta? <a href="Login.html">Faça login aqui!</a></h5>
         </form>
-    </main>
+    </div>
 
 
    
