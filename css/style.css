@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -101,8 +102,3 @@ button {
     display: block;
 }
 
-.rounded-image {
-    border-radius: 50%; /* Define um arredondamento de 50%, tornando a imagem circular */
-  
-    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
-}
