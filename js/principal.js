@@ -6,10 +6,12 @@
     });
 
     // Adicione o evento de clique para abrir/fechar o menu suspenso
-const userIcon = document.querySelector('.user-icon');
-
-userIcon.addEventListener('click', () => {
-    const userDropdown = userIcon.querySelector('.user-dropdown');
-    userDropdown.classList.toggle('show');
-});
-
+    document.addEventListener("DOMContentLoaded", function() {
+        const userIcon = document.querySelector('.user-dropdown');
+        const userDropdown = userIcon.querySelector('.dropdown-content');
+    
+        userIcon.addEventListener('click', () => {
+            userDropdown.classList.toggle('show');
+        });
+    });
+    
