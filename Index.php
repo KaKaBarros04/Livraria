@@ -1,5 +1,52 @@
-<html>
+<?php
+
+// processar formularios
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    
+$nome = $_POST['nome'];
+$apelido = $_POST['apelido'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+	
+    if(!empty($nome) && !empty($apelido) && !empty($email) && !empty($password)){
+
+        include('conexão.php');
+
+		mysqli_query($dbc, "INSERT INTO users(nome,apelido,email,senha) VALUES('$nome','$apelido','$email','$password')");
+
+		$registered = mysqli_affected_rows($dbc);
+
+		echo '<script>alert("Seu registo foi feito com sucesso");</script>';
+
+    }else{
+
+        echo '<script>alert("Por favor, não deixe campos em brancos");</script>';
+
+    }
+
+}else{
+
+    echo '<script>alert("Por favor, preencha o formulário");</script>';
+
+}
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="author" content="Kauan Benitez" />
+        <meta name="keywords" content="livros, literatura, ficção, não-ficção, best-sellers, clássicos, livraria">
+        <meta name="description" content="Descubra o mundo dos livros na nossa livraria! Oferecemos uma ampla seleção de títulos em todas as categorias, desde best-sellers até clássicos. Compre online e receba em casa ou visite nossa loja física.">
+        <meta charset="UTF-8">
+        <meta name="robots" content="index, follow">
+        <meta name="og:title" content="Título da página">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
         <link rel="stylesheet" class="link-midia-social" href="css/login.css">
         <script src="https://kit.fontawesome.com/bfe65bea0c.js" crossorigin="anonymous"></script>
@@ -26,22 +73,22 @@
             </div><!--Redes sociais-->
 
             <p class="description description-second">Ou utilize o seu e-mail para se registar</p>
-            <form action="#" class="form" id="signup-form">
+            <form action="Index.php" class="form" id="signup-form" method="post">
                 <label class="label-input" for="">
                     <i class="fa-regular fa-user icon-modify"></i>
-                    <input type="text" name="" id="username" placeholder="Nome">
+                    <input type="text" name="nome" id="username" placeholder="Nome" maxlength="50">
+                </label>
+                <label class="label-input" for="">
+                    <i class="fa-regular fa-user icon-modify"></i>
+                    <input type="text" name="apelido" id="username" placeholder="Apelido" maxlength="50">
                 </label>
                 <label class="label-input" for="">
                     <i class="fa-regular fa-envelope icon-modify"></i>
-                    <input type="email" name="" id="email" placeholder="Email">
+                    <input type="email" name="email" id="email" placeholder="Email">
                 </label>
                 <label class="label-input" for="">
                     <i class="fa-solid fa-lock icon-modify"></i>
                     <input type="password" name="password" placeholder="Senha" required>
-                </label>
-                <label class="label-input" for="">
-                    <i class="fa-solid fa-lock icon-modify"></i>
-                    <input type="password" name="" id="password" placeholder="Confirme sua senha" required>
                 </label>
                 <button class="btn btn-second">Increva-se</button>
             </form>
@@ -64,14 +111,14 @@
                 </ul>
             </div><!--Redes sociais-->
             <p class="description description-second">ou utilize a sua conta de email</p>
-            <form action="#" class="form" id="login-form">
+            <form action="login.php" class="form" id="login-form" method="post">
                 <label class="label-input" for="">
                     <i class="fa-regular fa-envelope icon-modify"></i>
-                    <input type="email" name="email" id="email1" placeholder="Email">
+                    <input type="email" name="login_email" id="email1" placeholder="Email" maxlength="50">
                 </label>
                 <label class="label-input" for="">
                     <i class="fa-solid fa-lock icon-modify"></i>
-                    <input type="password" name="" id="password1" placeholder="password">
+                    <input type="password" name="login_senha" id="password1" placeholder="password" maxlength="50">
                 </label>
                 <a class="password" href="#">Esqueceu a sua senha?</a>
                 <button class="btn btn-second">Entrar</button>
