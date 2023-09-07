@@ -82,7 +82,7 @@ body {
     padding: 10px 50px;
     cursor: pointer;
     font-weight: bold;
-    width: 170px;
+    
     align-self: center;
     border-width: 0;
     margin-top: 1rem;
@@ -234,13 +234,13 @@ body {
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     left: 60%;
-    animation: slider 3s;
+    animation: slider 1s;
 
     z-index: 12;
 }
 
 .inscreva-js .conteudos::before {
-    animation: slider2 3s;
+    animation: slider2 1s;
 
     z-index: 12;
 }
