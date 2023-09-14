@@ -15,3 +15,30 @@
         });
     });
     
+//Banner 
+
+    let fotos = ["ilove.jpg", "saldo.jpg", "lv.jpg", "book.jpg", "sugestao.jpg", "mindset.png"];
+    
+    
+    
+    function TrocarFoto(foto){
+        document.querySelector(".banner").src = "imagem/" + fotos[foto];
+        
+    }
+    
+    let fotoAtual = 0;
+    TrocarFoto(fotoAtual);
+    
+    
+    var timer = setInterval(function(){
+        fotoAtual++;
+        if(fotoAtual > 5){
+            fotoAtual = 0;
+        }
+        
+        TrocarFoto(fotoAtual);
+    } , 4000);
+    
+    function Parar() {
+        clearInterval(timer);
+      }
