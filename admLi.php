@@ -89,28 +89,26 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     
     <script>
-        $(document).ready(function () {
-            $("#menu-toggle").click(function () {
-                $(".navmenu").slideToggle(200, function () {
-                    // Adiciona/remova a classe 'vertical-menu' para alternar entre os modos horizontal e vertical
-                    $(".menu").toggleClass("vertical-menu");
+ $(document).ready(function () {
+    // Oculta o menu ao carregar a página
+    $(".navmenu").hide();
 
-                    // Se o menu estiver visível na versão vertical, adiciona a classe 'hidden' ao body para ocultar o overflow
-                    $("body").toggleClass("hidden", $(".navmenu").hasClass("vertical-menu") && $(".navmenu").is(":visible"));
-                });
-                
-                $(this).toggleClass("active");
-            });
+    $("#menu-toggle").click(function () {
+        $(".navmenu").slideToggle(200); // Seleciona a classe .navmenu para alternar a visibilidade
+        $(this).toggleClass("active"); // Adiciona a classe 'active' ao botão de alternância de menu
+    });
 
-            $('.menu-item').hover(
-                function () {
-                    $(this).children('.submenu').slideDown(200);
-                },
-                function () {
-                    $(this).children('.submenu').slideUp(200);
-                }
-            );
-        });
-    </script>
+    // Remova o código duplicado para o evento hover, se necessário
+    $('.menu-item').hover(
+        function () {
+            $(this).children('.submenu').slideDown(200);
+        },
+        function () {
+            $(this).children('.submenu').slideUp(200);
+        }
+    );
+});
+
+</script>
 </body>
-</html>
+

@@ -1,16 +1,15 @@
 $(document).ready(function () {
     $("#menu-toggle").click(function () {
-        $(".navmenu").slideToggle(200, function () {
-            // Adiciona/remova a classe 'vertical-menu' para alternar entre os modos horizontal e vertical
-            $(".menu").toggleClass("vertical-menu");
-
-            // Se o menu estiver visível na versão vertical, adiciona a classe 'hidden' ao body para ocultar o overflow
-            $("body").toggleClass("hidden", $(".navmenu").hasClass("vertical-menu") && $(".navmenu").is(":visible"));
-        });
-        
-        $(this).toggleClass("active");
+        var x = document.getElementById("links");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+        $(this).toggleClass("active"); // movido para dentro da função de clique
     });
 
+    // Remova o código duplicado para o evento hover
     $('.menu-item').hover(
         function () {
             $(this).children('.submenu').slideDown(200);

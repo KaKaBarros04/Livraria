@@ -122,7 +122,7 @@ button {
     padding: 0;
     margin: 0;
     overflow: hidden; /* Adicionei isso para evitar problemas com a animação de slideToggle */
-    display: none; /* Mantive o display: none aqui */
+    
 }
 
 .vertical-menu {
