@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+header {
+    background-image: url('../imagem/book-bookmark-solid.svg');
+    background-size: 100px;
+    background-position: 20% 50%;
+    background-color: #fff200;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding: 4.5rem;
+    font-size: larger;
+}
+
+nav {
+    background-color: #000000;
+    color: #fff;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+nav a:hover {
+    background-color: #fff200;
+    color: #000000;
+}
+
+main {
+    padding: 2rem;
+    justify-content: space-between;
+}
+
+footer {
+    background-color: #000000;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+}
+
+form {
+    display: flex;
+    align-items: center;
+}
+
+input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #fff200;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-dropdown .fas,
+.user-dropdown .far {
+    cursor: pointer;
+}
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #ffffff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #fff200;
+}
+
+.user-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.user-img {
+    margin-top: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #fff200;
+}
+/* Estilos do menu */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden; /* Adicionei isso para evitar problemas com a animação de slideToggle */
+    display: none; /* Mantive o display: none aqui */
+}
+
+.vertical-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menu-item {
+    position: relative;
+}
+
+.menu-item a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.submenu-item {
+    display: block;
+}
+
+.menu-item:hover .submenu {
+    display: block;
+}
+
+/* Adicione esta regra ao seu arquivo CSS */
+.hidden {
+    overflow: hidden;
+}
+
