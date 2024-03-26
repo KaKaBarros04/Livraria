@@ -39,7 +39,6 @@ nav a:hover {
 }
 
 main {
-    padding: 2rem;
     justify-content: space-between;
 }
 
@@ -68,7 +67,6 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-left: 10px;
 }
 
 
@@ -117,6 +115,12 @@ button {
     background-color: #fff200;
 }
 /* Estilos do menu */
+
+.navmenu {
+    background-color: #000000;
+    margin-right: 85%;
+}
+
 .menu {
     list-style: none;
     padding: 0;
@@ -133,13 +137,14 @@ button {
 
 .menu-item {
     position: relative;
+    background-color: #000000;
 }
 
 .menu-item a {
     display: block;
     padding: 10px;
     text-decoration: none;
-    color: #333;
+    color: #ffffff;
 }
 
 .submenu {
@@ -147,7 +152,7 @@ button {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #fff;
+    background-color: #000000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
