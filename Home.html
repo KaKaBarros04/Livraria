@@ -43,11 +43,54 @@
     <main>
         <h2>Bem-vindo à minha página!</h2>
         <p>Esta é uma página básica criada com HTML.</p>
+
+        <button id="menu-toggle" class="menu-toggle">&#9776;</button>
+        
+        <div class="navmenu">
+            <?php
+            // Conexão com o banco de dados 
+            include('conexão.php');
+
+            // Verifique se a conexão falhou
+            if (!$dbc) {
+                die("Não foi possível conectar ao banco de dados: " . mysqli_connect_error());
+            }
+
+            $select_categoria = mysqli_query($dbc, "SELECT * FROM categorias ORDER BY idcategoria DESC");
+
+            if (mysqli_num_rows($select_categoria) >= 1) :
+            ?>
+                <ul class="menu">
+                    <?php while ($res = mysqli_fetch_assoc($select_categoria)) : ?>
+                        <li class="menu-item">
+                            <!-- Adicione o parâmetro id_cat ao href -->
+                            <a href="subcategorias.php?id_cat=<?= $res['idcategoria'] ?>"><?= $res['NomeCategoria'] ?></a>
+
+                            <?php
+                            // Se existirem subcategorias, exiba-as
+                            $subcat = mysqli_query($dbc, "SELECT * FROM subcategoria WHERE id_cat = " . $res['idcategoria'] . " ORDER BY Nome DESC");
+
+                            if (mysqli_num_rows($subcat) >= 1) :
+                            ?>
+                                <ul class="submenu">
+                                    <?php while ($linha = mysqli_fetch_assoc($subcat)) : ?>
+                                        <li class="submenu-item">
+                                            <a href="<?= $linha['slug'] ?>"><?= $linha['Nome'] ?></a>
+                                        </li>
+                                    <?php endwhile; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </li>
+                    <?php endwhile; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
     </main>
 
     <footer>
         &copy; 2023 EMPOWER BOOKS | Todos os direitos reservados
     </footer>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="./js/principal.js"></script>
 </body>
 </html>

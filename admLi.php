@@ -60,7 +60,8 @@
                 <ul class="menu">
                     <?php while ($res = mysqli_fetch_assoc($select_categoria)) : ?>
                         <li class="menu-item">
-                            <a href="<?= $res['slug'] ?>"><?= $res['NomeCategoria'] ?></a>
+                            <!-- Adicione o parâmetro id_cat ao href -->
+                            <a href="subcategorias.php?id_cat=<?= $res['idcategoria'] ?>"><?= $res['NomeCategoria'] ?></a>
 
                             <?php
                             // Se existirem subcategorias, exiba-as
@@ -88,27 +89,6 @@
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     
-    <script>
- $(document).ready(function () {
-    // Oculta o menu ao carregar a página
-    $(".navmenu").hide();
-
-    $("#menu-toggle").click(function () {
-        $(".navmenu").slideToggle(200); // Seleciona a classe .navmenu para alternar a visibilidade
-        $(this).toggleClass("active"); // Adiciona a classe 'active' ao botão de alternância de menu
-    });
-
-    // Remova o código duplicado para o evento hover, se necessário
-    $('.menu-item').hover(
-        function () {
-            $(this).children('.submenu').slideDown(200);
-        },
-        function () {
-            $(this).children('.submenu').slideUp(200);
-        }
-    );
-});
-
-</script>
+    <script src="./js/admLi.js"></script>
 </body>
 
