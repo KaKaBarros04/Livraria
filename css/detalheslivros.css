@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+header {
+    background-image: url('../imagens/book-bookmark-solid.svg');
+    background-size: 100px;
+    background-position: 33% 50%;
+    background-color: #fff200;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding: 4.5rem;
+    font-size: larger;
+}
+
+main {
+    flex-grow: 1; /* Isso garante que o conteúdo ocupe o espaço restante */
+}
+
+footer {
+    background-color: #000000;
+    color: #fff;
+    text-align: center;
+    padding: 1rem; /* Ajuste no padding para maior espaçamento */
+}
+
+/* Resetando alguns estilos padrões */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Card */
+.livro-detalhes {
+    background-color: white;
+    width: 50%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.livro-detalhes img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.livro-detalhes h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.livro-detalhes p {
+    font-size: 16px;
+    color: #7f8c8d;
+    margin-bottom: 10px;
+}
+
+.livro-detalhes strong {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.livro-detalhes a {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.livro-detalhes a:hover {
+    background-color: #2980b9;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .livro-detalhes {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .livro-detalhes img {
+        max-width: 200px;
+    }
+
+    .livro-detalhes h2 {
+        font-size: 20px;
+    }
+
+    .livro-detalhes p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 18px;
+    }
+
+    .livro-detalhes h2 {
+        font-size: 18px;
+    }
+
+    .livro-detalhes p {
+        font-size: 12px;
+    }
+
+    .livro-detalhes img {
+        max-width: 150px;
+    }
+
+    .livro-detalhes a {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}

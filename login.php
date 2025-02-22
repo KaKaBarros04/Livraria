@@ -1,70 +1,56 @@
 <?php 
 
-error_reporting(0);
-ini_set('display_errors', 0);
+// Habilitar exibição de erros apenas para desenvolvimento (remova em produção)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
+// Iniciar a sessão apenas quando necessário
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-    include("conexão.php");
+include("conexão.php");
 
-    //Agarrar valores do email e senha do formulário de login
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    // Validar se os campos foram preenchidos
+    if (empty($_POST['login_email']) || empty($_POST['login_senha'])) {
+        echo "Preencha todos os campos!";
+        exit();
+    }
 
+    // Capturar valores e proteger contra SQL Injection
     $login_email = mysqli_real_escape_string($dbc, trim($_POST['login_email']));
-    $login_password = mysqli_real_escape_string($dbc, $_POST['login_senha']);
+    $login_password = trim($_POST['login_senha']);
 
-    //Criar a consulta e números de linhas retornadas a partir da consulta
+    // Criar a consulta segura usando Prepared Statements
+    $query = mysqli_prepare($dbc, "SELECT user_id, nome, senha FROM users WHERE email = ?");
+    mysqli_stmt_bind_param($query, 's', $login_email);
+    mysqli_stmt_execute($query);
+    $result = mysqli_stmt_get_result($query);
 
-    $query = mysqli_query($dbc, "SELECT * FROM users WHERE email='".$login_email."'");
-    $numrows = mysqli_num_rows($query);
+    // Verificar se o e-mail existe
+    if ($row = mysqli_fetch_assoc($result)) {
+        // Comparar a senha fornecida com o hash no banco
+        if (password_verify($login_password, $row['senha'])) {
+            // Definir sessão do usuário
+            $_SESSION['user_id'] = $row['user_id'];  // Usando 'user_id' que é a chave primária
+            $_SESSION['user_name'] = $row['nome'];
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-
-   //criar a condição para verificar se há  linha com aquele email
-
-    if($numrows != 0){
-
-    //agarrar o email e senha dessa linha retornada antes
-
-        while($row = mysqli_fetch_array($query)){
-
-            $dbemail = $row['email'];
-            $dbpass = $row['senha'];
-            $dbfirstname = $row['nome'];
-
+            // Redirecionar para a página inicial
+            header("Location: Home.php");
+            exit();
+        } else {
+            echo "Senha incorreta!";
         }
-
-//criar condição para verificar email e senha são iguais à linha retornada
-
-
-        if($login_email==$dbemail) { 
-            if($login_password==$dbpass) {
-
-                include ("Home.html");
-
-            }else{
-
-                echo "Your password is incorrect!";
-
-            }
-
-
-        }else{
-
-            echo "Your email is incorrect!";
-
-        }
-
-
-    }else{
-
-        echo "Are you not registered. Please register bellow";
-
+    } else {
+        echo "E-mail não registrado! Por favor, crie uma conta.";
     }
 
-    }else{
-
-        echo "Please Login...";
-
-    }
-
+    // Fechar a conexão
+    mysqli_stmt_close($query);
+    mysqli_close($dbc);
+} else {
+    echo "Acesso inválido!";
+}
 ?>

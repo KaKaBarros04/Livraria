@@ -1,36 +1,61 @@
-    document.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const query = document.querySelector('input[name="q"]').value;
-        // Faça algo com a pesquisa, como redirecionar para uma página de resultados
-        window.location.href = '/resultados?query=' + encodeURIComponent(query);
-    });
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector('form');
+    const searchInput = document.querySelector('input[name="query"]');
 
-    // Adicione o evento de clique para abrir/fechar o menu suspenso
-    document.addEventListener("DOMContentLoaded", function() {
-        const userIcon = document.querySelector('.user-dropdown');
+    // Formulário de pesquisa
+    if (form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const query = searchInput.value.trim(); // Remove espaços extras
+
+            if (query) {
+                window.location.href = 'Home.php?query=' + encodeURIComponent(query);
+            }
+        });
+    }
+
+    // Evento para abrir/fechar o menu suspenso
+    const userIcon = document.querySelector('.user-dropdown');
+    if (userIcon) {
         const userDropdown = userIcon.querySelector('.dropdown-content');
-    
         userIcon.addEventListener('click', () => {
             userDropdown.classList.toggle('show');
         });
+    }
+});
+
+// Código jQuery para o menu hambúrguer
+$(document).ready(function () {
+    // Inicialmente, esconder o menu de navegação
+    $(".navmenu").hide();
+
+    // Alternar visibilidade do menu ao clicar no botão de menu (hambúrguer)
+    $("#menu-toggle").click(function () {
+        $(".navmenu").slideToggle(200); // Anima o menu
+        $(this).toggleClass("active");  // Alterna a classe ativa (para possíveis efeitos)
     });
-    
-    $(document).ready(function () {
-        // Oculta o menu ao carregar a página
-        $(".navmenu").hide();
-    
-        $("#menu-toggle").click(function () {
-            $(".navmenu").slideToggle(200); // Seleciona a classe .navmenu para alternar a visibilidade
-            $(this).toggleClass("active"); // Adiciona a classe 'active' ao botão de alternância de menu
-        });
-    
-        // Remova o código duplicado para o evento hover, se necessário
-        $('.menu-item').hover(
-            function () {
-                $(this).children('.submenu').slideDown(200);
-            },
-            function () {
-                $(this).children('.submenu').slideUp(200);
-            }
-        );
+
+    // Corrigir hover para o submenu
+    $('.menu-item').hover(
+        function () {
+            $(this).children('.submenu').stop(true, true).slideDown(200); // Mostra o submenu
+        },
+        function () {
+            $(this).children('.submenu').stop(true, true).slideUp(200); // Oculta o submenu
+        }
+    );
+
+    // Evento de clique para categorias
+    $(".category-link").click(function (e) {
+        e.preventDefault(); // Impede o recarregamento da página
+        let categoryId = $(this).data("category");
+        window.location.href = "Home.php?category=" + categoryId; // Filtra pela categoria
     });
+
+    // Evento de clique para subcategorias
+    $(".subcategory-link").click(function (e) {
+        e.preventDefault(); // Impede o recarregamento da página
+        let subcategoryId = $(this).data("subcategory");
+        window.location.href = "Home.php?sub_category=" + subcategoryId; // Filtra pela subcategoria
+    });
+});

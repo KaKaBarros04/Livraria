@@ -2,6 +2,7 @@
 
 session_start();
 
+// Função para gerar uma chave aleatória
 function gerarChaveAleatoria($tamanho = 7) {
     $caracteres = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     $chave = '';
@@ -17,27 +18,44 @@ $mostrarDiv = false;
 
 // Processar formulários
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nome = $_POST['nome'];
-    $apelido = $_POST['apelido'];
-    $email = $_POST['email'];
+    // Captura dos dados do formulário
+    $nome = trim($_POST['nome']);
+    $apelido = trim($_POST['apelido']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
+    // Validação dos campos
     if (!empty($nome) && !empty($apelido) && !empty($email) && !empty($password)) {
         include('conexão.php');
 
-        // Gere a chave de validação
-        $chaveValidacao = gerarChaveAleatoria();
+        // Verificar se o e-mail já existe no banco
+        $queryCheckEmail = "SELECT * FROM users WHERE email = ?";
+        $stmt = mysqli_prepare($dbc, $queryCheckEmail);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
-        // Insira os dados do usuário no banco de dados junto com a chave de validação
-        mysqli_query($dbc, "INSERT INTO users(nome, apelido, email, senha, chave_validacao) VALUES('$nome', '$apelido', '$email', '$password', '$chaveValidacao')");
-
-        $registered = mysqli_affected_rows($dbc);
-
-        if ($registered) {
-            // Registro bem-sucedido, defina a variável para mostrar a div
-            $mostrarDiv = true;
+        if (mysqli_num_rows($result) > 0) {
+            echo '<script>alert("Este e-mail já está registrado.");</script>';
         } else {
-            echo '<script>alert("Erro ao cadastrar o usuário.");</script>';
+            // Gerar chave de validação
+            $chaveValidacao = gerarChaveAleatoria();
+
+            // Hash da senha
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+            // Preparando e executando a inserção no banco de dados
+            $query = "INSERT INTO users (nome, apelido, email, senha, chave_validacao) VALUES (?, ?, ?, ?, ?)";
+            $stmt = mysqli_prepare($dbc, $query);
+            mysqli_stmt_bind_param($stmt, "sssss", $nome, $apelido, $email, $passwordHash, $chaveValidacao);
+            mysqli_stmt_execute($stmt);
+
+            // Verificar se a inserção foi bem-sucedida
+            if (mysqli_affected_rows($dbc) > 0) {
+                $mostrarDiv = true; // Registro bem-sucedido, mostrar a chave de validação
+            } else {
+                echo '<script>alert("Erro ao cadastrar o usuário.");</script>';
+            }
         }
     } else {
         echo '<script>alert("Por favor, não deixe campos em branco");</script>';
@@ -46,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo '<script>alert("Por favor, preencha o formulário");</script>';
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -111,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        <div class="segunda-coluna">
             <h2 class="title title-second">Crie a sua conta</h2>
             <div class="redes-social">
-                <ul class="lista-midia-social">
+                <ul class="lista-midia-social">x
                     <a class="link-midia-social" href="#"><li class="item-midia"><i class="fa-brands fa-facebook-f"></i></li></a>
                     <a class="link-midia-social" href="#"><li class="item-midia"><i class="fa-brands fa-google-plus-g"></i></li></a>
                     <a class="link-midia-social" href="#"><li class="item-midia"><i class="fa-brands fa-linkedin-in"></i></li></a>

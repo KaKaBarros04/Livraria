@@ -6,7 +6,8 @@ var body = document.querySelector("body");
 
 btnEntrar.addEventListener("click", function () {
     body.className = "entrar-js";
-})
+});
+
 
 btnInscreva.addEventListener("click", function () {
     body.className = "inscreva-js";

@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SubCategorias</title>
         <link rel="stylesheet" href="./css/subcategoria.css">
-        <link rel="icon" href="./imagem/book-solid.svg">
+        <link rel="icon" href="./imagens/book-solid.svg">
     </head>
     <body>
         <header>
@@ -25,7 +25,7 @@
             <a href="#">Contato</a>
             
             <div class="user-dropdown">
-                <img class="user-img" src="./imagem/user.jpg" alt="">
+                <img class="user-img" src="./imagens/user.jpg" alt="">
                 <div class="dropdown-content">
                     <a href="#">Ver conta</a>
                     <a href="trocarsenha.php">Trocar senha</a>
@@ -50,13 +50,13 @@
                     die("Não foi possível conectar ao banco de dados: " . mysqli_connect_error());
                 }
 
-                // Verifique se o parâmetro id_cat foi passado na URL
-                if (isset($_GET['id_cat'])) {
+                // Verifique se o parâmetro sub_category_id foi passado na URL
+                if (isset($_GET['sub_category_id'])) {
                     // Use a função mysqli_real_escape_string para escapar o valor e evitar ataques de SQL Injection
-                    $id_cat = mysqli_real_escape_string($dbc, $_GET['id_cat']);
+                    $sub_category_id = mysqli_real_escape_string($dbc, $_GET['sub_category_id']);
 
                     // Faça a consulta SQL usando o valor escapado
-                    $select_categoria = mysqli_query($dbc, "SELECT * FROM subcategoria WHERE id_cat = '$id_cat'");
+                    $select_categoria = mysqli_query($dbc, "SELECT * FROM subcategoria WHERE idcategoria = '$sub_category_id'");
 
                     // Verifique se a consulta foi bem-sucedida
                     if ($select_categoria) {

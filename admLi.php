@@ -1,3 +1,60 @@
+
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php"); // Redireciona para o login
+    exit();
+}
+
+// Conectar ao banco de dados
+include('conexão.php');
+
+// Adicionar Livro
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_book'])) {
+    $title = $_POST['title'];
+    $author = $_POST['author'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $stock = $_POST['stock'];
+    $category_id = $_POST['category_id'];
+    $sub_category_id = $_POST['sub_category_id'];
+    
+    // Upload da imagem
+    $image_path = "";
+    if (!empty($_FILES['image']['name'])) {
+        $target_dir = "uploads/";
+        $image_path = $target_dir . basename($_FILES['image']['name']);
+        move_uploaded_file($_FILES['image']['tmp_name'], $image_path);
+    }
+    
+    $query = "INSERT INTO books (title, author, description, price, stock, category_id, sub_category_id, image) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $dbc->prepare($query);
+    $stmt->bind_param("sssdiiss", $title, $author, $description, $price, $stock, $category_id, $sub_category_id, $image_path);
+    $stmt->execute();
+    header("Location: AdmLi.php");
+}
+
+// Arquivar Livro
+if (isset($_GET['archive'])) {
+    $book_id = $_GET['archive'];
+    $query = "UPDATE books SET archived_at = NOW() WHERE book_id = ?";
+    $stmt = $dbc->prepare($query);
+    $stmt->bind_param("i", $book_id);
+    $stmt->execute();
+    header("Location: AdmLi.php");
+}
+
+// Excluir definitivamente livros arquivados há mais de 30 dias
+$query = "DELETE FROM books WHERE archived_at IS NOT NULL AND archived_at < NOW() - INTERVAL 30 DAY";
+$dbc->query($query);
+
+// Listar Livros
+$books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +68,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empower Books Adm</title>
     <link rel="stylesheet" href="./css/styleadm.css">
-    <link rel="icon" href="./imagem/book-solid.svg">
+    <link rel="icon" href="./imagens/book-solid.svg">
 </head>
 <body>
     <header>
@@ -19,16 +76,17 @@
     </header>
 
     <nav>
+        <a href="#"><button id="menu-toggle" class="menu-toggle">&#9776;</button></a>
         <a href="#">Início</a>
         <a href="#">Sobre</a>
         <a href="#">Produtos</a>
         <a href="#">Contato</a>
         
         <div class="user-dropdown">
-            <img class="user-img" src="./imagem/user.jpg" alt="">
+            <img class="user-img" src="./imagens/user.jpg" alt="">
             <div class="dropdown-content">
                 <a href="#">Ver conta</a>
-                <a href="trocarsenha.php">Trocar senha</a>
+                <a href="redefinir.php">Redefinir senha</a>
                 <a href="Index.php">Sair</a>
             </div>
         </div>
@@ -41,7 +99,8 @@
     </nav>
     
     <main>
-        <button id="menu-toggle" class="menu-toggle">&#9776;</button>
+       
+        
         
         <div class="navmenu">
             <?php
@@ -60,12 +119,12 @@
                 <ul class="menu">
                     <?php while ($res = mysqli_fetch_assoc($select_categoria)) : ?>
                         <li class="menu-item">
-                            <!-- Adicione o parâmetro id_cat ao href -->
-                            <a href="subcategorias.php?id_cat=<?= $res['idcategoria'] ?>"><?= $res['NomeCategoria'] ?></a>
+                            <!-- Adicione o parâmetro sub_category_id ao href -->
+                            <a href="subcategorias.php?sub_category_id=<?= $res['idcategoria'] ?>"><?= $res['NomeCategoria'] ?></a>
 
                             <?php
                             // Se existirem subcategorias, exiba-as
-                            $subcat = mysqli_query($dbc, "SELECT * FROM subcategoria WHERE id_cat = " . $res['idcategoria'] . " ORDER BY Nome DESC");
+                            $subcat = mysqli_query($dbc, "SELECT * FROM subcategoria WHERE idcategoria = " . $res['idcategoria'] . " ORDER BY Nome DESC");
 
                             if (mysqli_num_rows($subcat) >= 1) :
                             ?>
@@ -82,6 +141,45 @@
                 </ul>
             <?php endif; ?>
         </div>
+        <h2>Bem vindo Administrador</h2>
+        <h1>Gerenciar Livros</h1>
+    
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="Título" required>
+        <input type="text" name="author" placeholder="Autor" required>
+        <textarea name="description" placeholder="Descrição"></textarea>
+        <input type="number" name="price" placeholder="Preço" step="0.01" required>
+        <input type="number" name="stock" placeholder="Estoque" required>
+        <input type="number" name="category_id" placeholder="Categoria ID" required>
+        <input type="number" name="sub_category_id" placeholder="Subcategoria ID" required>
+        <input type="file" name="image">
+        <button type="submit" name="add_book">Adicionar Livro</button>
+    </form>
+    
+    <h2>Livros Cadastrados</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Preço</th>
+            <th>Estoque</th>
+            <th>Ações</th>
+        </tr>
+        <?php while ($book = $books->fetch_assoc()) : ?>
+            <tr>
+                <td><?= $book['book_id'] ?></td>
+                <td><?= $book['title'] ?></td>
+                <td><?= $book['author'] ?></td>
+                <td>€ <?= number_format($book['price'], 2, ',', '.') ?></td>
+                <td><?= $book['stock'] ?></td>
+                <td>
+                    <a href="edit_book.php?id=<?= $book['book_id'] ?>">Editar</a>
+                    <a href="AdmLi.php?archive=<?= $book['book_id'] ?>" onclick="return confirm('Tem certeza que deseja arquivar este livro?')">Arquivar</a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
     </main>
 
     <footer>
