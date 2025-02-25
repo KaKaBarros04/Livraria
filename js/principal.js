@@ -26,36 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Código jQuery para o menu hambúrguer
 $(document).ready(function () {
-    // Inicialmente, esconder o menu de navegação
-    $(".navmenu").hide();
-
-    // Alternar visibilidade do menu ao clicar no botão de menu (hambúrguer)
     $("#menu-toggle").click(function () {
-        $(".navmenu").slideToggle(200); // Anima o menu
-        $(this).toggleClass("active");  // Alterna a classe ativa (para possíveis efeitos)
-    });
+        $(".navmenu").toggleClass("active"); // Alterna a classe active
+        $(this).toggleClass("active"); // Alterna a classe active no botão
 
-    // Corrigir hover para o submenu
-    $('.menu-item').hover(
-        function () {
-            $(this).children('.submenu').stop(true, true).slideDown(200); // Mostra o submenu
-        },
-        function () {
-            $(this).children('.submenu').stop(true, true).slideUp(200); // Oculta o submenu
+        // Verifica se o menu está visível e ajusta a exibição
+        if ($(".navmenu").hasClass("active")) {
+            $(".navmenu").slideDown(200); // Mostra o menu
+        } else {
+            $(".navmenu").slideUp(200); // Esconde o menu
         }
-    );
-
-    // Evento de clique para categorias
-    $(".category-link").click(function (e) {
-        e.preventDefault(); // Impede o recarregamento da página
-        let categoryId = $(this).data("category");
-        window.location.href = "Home.php?category=" + categoryId; // Filtra pela categoria
-    });
-
-    // Evento de clique para subcategorias
-    $(".subcategory-link").click(function (e) {
-        e.preventDefault(); // Impede o recarregamento da página
-        let subcategoryId = $(this).data("subcategory");
-        window.location.href = "Home.php?sub_category=" + subcategoryId; // Filtra pela subcategoria
     });
 });
+

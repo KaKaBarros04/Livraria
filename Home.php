@@ -29,7 +29,7 @@ if ($category_filter) {
 
 // Adicionar o filtro de subcategoria, se presente
 if ($sub_category_filter) {
-    $query .= " AND subcategory_id = ?";
+    $query .= " AND sub_category_id = ?";
 }
 
 // Preparar a consulta
@@ -142,7 +142,7 @@ $result = $stmt->get_result();
                         <ul class="submenu">
                             <?php while ($linha = mysqli_fetch_assoc($subcat)) : ?>
                             <li class="submenu-item">
-                                <a href="?category=<?= $res['idcategoria'] ?>&sub_category=<?= $linha['idsubcategoria'] ?>" class="subcategory-link" data-subcategory="<?= $linha['idsubcategoria'] ?>">
+                                <a href="?category=<?= $res['idcategoria'] ?>&sub_category=<?= $linha['sub_category_id'] ?>" class="subcategory-link" data-subcategory="<?= $linha['sub_category_id'] ?>">
                                     <?= htmlspecialchars($linha['Nome']) ?>
                                 </a>
                             </li>

@@ -113,11 +113,28 @@ button {
 
 /* Estilos do menu */
 
+/* Corrigir a visibilidade do menu */
 .navmenu {
-    background-color: #000000;
-    margin-right: 85%;
-    display: none; /* Esconde o menu inicialmente */
+    display: none;
+    position: absolute;
+    background-color: #000;
+    width: auto; /* Ajuste conforme necessário */
+    top: 320px;
+    left: 0;
+    z-index: 1000;
+    padding: 20px;
 }
+
+.navmenu.active {
+    display: flex; /* Usa flexbox para melhor controle */
+    flex-direction: column;
+}
+
+.navmenu a:hover{
+    background-color: #fff200;
+    color: #000000;
+}
+
 
 .menu {
     list-style: none;
@@ -145,7 +162,7 @@ button {
 
 .submenu {
     display: none;
-    position: absolute;
+    position: relative;
     top: 100%;
     left: 0;
     background-color: #000000;
@@ -184,7 +201,7 @@ button {
 
 .livro-card img {
     width: 100%;
-    height: 200px;
+    height: 400px;
     object-fit: cover;
     border-radius: 5px;
 }
@@ -237,9 +254,4 @@ form select {
 
 #menu-toggle.active:after {
     transform: rotate(-45deg); /* Rotaciona o ícone do menu */
-}
-
-/* Menu de navegação oculto quando não estiver ativo */
-.navmenu.active {
-    display: block; /* Exibe o menu quando a classe "active" é aplicada */
 }
