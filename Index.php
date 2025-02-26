@@ -81,9 +81,9 @@ $result = $stmt->get_result();
     <nav>
         <a href="#"><button id="menu-toggle" class="menu-toggle">&#9776;</button></a>
         <a href="Index.php">Início</a>
-        <a href="#">Sobre</a>
-        <a href="#">Produtos</a>
-        <a href="#">Contato</a>
+        <a href="sobrenos.php">Sobre</a>
+        <a href="produtos.php">Produtos</a>
+        <a href="contatos.php">Contatos</a>
 
         <div class="user-dropdown">
     <?php if (isset($_SESSION['user']) && isset($_SESSION['user']['name'])): ?>
