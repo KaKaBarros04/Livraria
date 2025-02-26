@@ -1,42 +1,87 @@
-# Empower Books - Projeto de Livraria
-  Bem-vindo ao projeto Empower Book, uma livraria online onde os amantes da leitura podem explorar uma vasta seleção de livros em várias categorias. 
-  Este projeto foi desenvolvido como parte de um curso de programação web, para o teste final.
-  
-# Visão Geral
-Empower Books é uma plataforma virtual que permite aos usuários:
-- Explorar e pesquisar livros em diferentes categorias;
-- Realizar compras online de livros;
-- Acompanhar pedidos e histórico de compras;
-- Acessar informações detalhadas sobre os livros, incluindo sinopse, autor e avaliações.
+📚 Empower Books - Projeto de Livraria
+Bem-vindo ao Empower Books, uma livraria online desenvolvida para os amantes da leitura. Este projeto foi criado como parte do teste final de um curso de programação web.
 
-# Funcionalidades Principais
-- Pesquisa de Livros: Os usuários podem pesquisar livros por título, autor, categoria e palavras-chave.
-- Carrinho de Compras: Os usuários podem adicionar livros ao carrinho de compras e finalizar a compra.
-- Conta de Usuário: Os usuários podem criar contas, fazer login e gerenciar suas informações pessoais.
-- Avaliações e Comentários: Os usuários podem avaliar e deixar comentários sobre os livros que compraram.
-- Página de Administração: Uma interface de administração permite aos administradores gerenciar estoque, categorias de livros e pedidos.
+🔍 Visão Geral
+O Empower Books é uma plataforma virtual que permite aos usuários:
+✅ Explorar e pesquisar livros em diferentes categorias.
+✅ Comprar livros online de forma prática.
+✅ Acompanhar pedidos e histórico de compras.
+✅ Acessar detalhes dos livros, como sinopse, autor e avaliações.
 
-# Tecnologias Utilizadas
-- Front-End: HTML, CSS, JavaScript
-- Back-End: PHP, Bootstrap
-- Banco de Dados: [Insira o banco de dados que você está usando]
+✨ Funcionalidades Principais
+📖 Pesquisa de Livros: Busque livros por título, autor, categoria e palavras-chave.
+🛒 Carrinho de Compras: Adicione livros ao carrinho e finalize a compra.
+👤 Conta de Usuário: Cadastro, login e gerenciamento de perfil.
+⭐ Avaliações e Comentários: Avalie e comente sobre os livros comprados.
+⚙️ Área Administrativa: Os administradores podem gerenciar estoque, categorias e pedidos.
 
-  # Instalação
-  1.Clone este repositório para o seu computador.
-  2.Instale as dependências necessárias executando npm install [ou o comando relevante para a sua linguagem/framework] no diretório raiz do projeto.
-  3.Configure as variáveis de ambiente necessárias, como as credenciais do banco de dados ou chaves de API.
-  4.Inicie o servidor utilizando o comando npm start [ou o comando relevante].
+🛠 Tecnologias Utilizadas
+🔹 Front-End
+HTML5, CSS3, JavaScript
+Bootstrap (para estilização responsiva)
+🔹 Back-End
+PHP (processamento de dados e regras de negócio)
+MySQL (banco de dados para armazenar usuários, livros e pedidos)
+🔹 Outras Tecnologias
+XAMPP/WAMP (para rodar o servidor localmente)
+Git e GitHub (controle de versão)
+📌 Instalação e Configuração
+1️⃣ Clone o repositório
 
- # Como Contribuir
- 1.Faça um fork deste repositório.
- 2.Crie uma branch para a sua feature (git checkout -b minha-nova-feature).
- 3.Faça commit das suas mudanças (git commit -m 'Adicionar nova feature').
- 4.Faça push para a branch (git push origin minha-nova-feature).
- 5.Crie um Pull Request explicando suas alterações.
+sh
+Copiar
+Editar
+git clone https://github.com/seu-usuario/EmpowerBooks.git
+2️⃣ Configure o banco de dados
 
-# Autor
-Kauan Benitez
+Crie um banco de dados chamado empower_books no MySQL.
+Importe o arquivo banco_de_dados/dados_livraria.sql para criar as tabelas necessárias.
+3️⃣ Configure as credenciais do banco no projeto
+No arquivo conexao.php, edite as credenciais:
 
-# Licença
-Este projeto está licenciado sob a MIT
- 
+php
+Copiar
+Editar
+$host = "localhost";
+$user = "root";  // Substitua pelo seu usuário do MySQL
+$password = "";  // Substitua pela sua senha do MySQL
+$database = "empower_books";
+$dbc = mysqli_connect($host, $user, $password, $database);
+4️⃣ Inicie o servidor localmente
+
+Se estiver usando o XAMPP, inicie o Apache e o MySQL.
+Acesse http://localhost/EmpowerBooks/ no navegador.
+👥 Como Contribuir
+💡 Quer ajudar a melhorar o Empower Books? Siga estes passos:
+
+Faça um fork deste repositório.
+Crie uma branch para sua nova feature:
+sh
+Copiar
+Editar
+git checkout -b minha-nova-feature
+Faça as alterações e commite:
+sh
+Copiar
+Editar
+git commit -m "Adicionei uma nova funcionalidade"
+Envie para o seu repositório remoto:
+sh
+Copiar
+Editar
+git push origin minha-nova-feature
+Abra um Pull Request explicando as mudanças.
+💡 Sugestões de melhorias:
+🔹 Implementar um sistema de cupons de desconto.
+🔹 Melhorar a interface da página de administração.
+🔹 Criar uma API para integração com outras plataformas.
+
+✒️ Autor
+👤 Kauan Benitez
+📧 [Seu email ou contato opcional]
+🌐 [Seu site ou perfil no GitHub]
+
+📜 Licença
+📝 Este projeto está licenciado sob a MIT License – você pode usá-lo, modificá-lo e distribuí-lo livremente.
+
+🚀 Gostou do projeto? Deixe uma ⭐ no repositório e contribua!
