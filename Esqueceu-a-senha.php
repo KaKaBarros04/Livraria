@@ -49,5 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['chave_validacao'])) {
         </form>
     </div>
 </div>
+<footer>
+        &copy; 2025 EMPOWER BOOKS | Todos os direitos reservados
+    </footer>
 </body>
 </html>

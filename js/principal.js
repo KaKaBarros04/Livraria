@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const query = searchInput.value.trim(); // Remove espaços extras
 
             if (query) {
-                window.location.href = 'Home.php?query=' + encodeURIComponent(query);
+                window.location.href = 'Index.php?query=' + encodeURIComponent(query);
             }
         });
     }

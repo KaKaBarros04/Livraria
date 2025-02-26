@@ -36,7 +36,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <header>
         <h1>Detalhes do Livro</h1>
     </header>
-    
+    <nav>
+        <a href="Index.php">Início</a>
+</nav>
     <main>
         <div class="livro-detalhes">
             <img src="<?= htmlspecialchars($book['image']) ?>" alt="<?= htmlspecialchars($book['title']) ?>">
@@ -49,7 +51,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     </main>
     
     <footer>
-        <p>&copy; 2024 Empower Books</p>
+        &copy; 2025 EMPOWER BOOKS | Todos os direitos reservados
     </footer>
 </body>
 </html>

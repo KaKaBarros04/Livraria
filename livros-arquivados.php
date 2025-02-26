@@ -68,7 +68,7 @@ $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NOT NULL");
         <p>Nenhum livro arquivado encontrado.</p>
     <?php endif; ?>
     <footer>
-        &copy; 2023 EMPOWER BOOKS | Todos os direitos reservados
+        &copy; 2025 EMPOWER BOOKS | Todos os direitos reservados
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>

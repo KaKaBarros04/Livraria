@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 // Habilitar exibição de erros apenas para desenvolvimento
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -43,12 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verificar se o e-mail existe e validar senha
     if ($row = mysqli_fetch_assoc($result)) {
         if (password_verify($login_password, $row['senha'])) {
-            $_SESSION['user_id'] = $row['user_id'];
-            $_SESSION['user_name'] = $row['nome'];
-            header("Location: Home.php");
+            $_SESSION['user'] = [
+                'id' => $row['user_id'],
+                'name' => $row['nome']
+            ];
+            header("Location: Index.php");
             exit();
         }
     }
+
+    
     
     // Se falhar, mensagem genérica
     $_SESSION['login_error'] = "E-mail ou senha inválidos!";

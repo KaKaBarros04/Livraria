@@ -1,206 +1,174 @@
 <?php
-session_start();
+session_start(); // Garante que a sessão seja iniciada
 
-// Função para gerar uma chave segura
-function gerarChaveAleatoria($tamanho = 7) {
-    return substr(bin2hex(random_bytes($tamanho)), 0, $tamanho);
+
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Conectar ao banco de dados
+include('conexão.php');
+
+// Definir a variável de pesquisa, se fornecida
+$search_query = isset($_GET['query']) ? $_GET['query'] : '';
+
+// Variáveis para armazenar os filtros de categoria e subcategoria
+$category_filter = isset($_GET['category']) ? $_GET['category'] : null;
+$sub_category_filter = isset($_GET['sub_category']) ? $_GET['sub_category'] : null;
+
+// Inicializar a consulta SQL
+// Construção da query
+$query = "SELECT * FROM books WHERE 1=1";
+$params = [];
+$param_types = "";
+
+// Adicionar o filtro de pesquisa no título, se fornecido
+if (!empty($search_query)) {
+    $query .= " AND title LIKE ?";
+    $params[] = "%$search_query%";
+    $param_types .= "s"; // String
 }
 
-$mostrarDiv = false;
-
-// Processar formulário
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nome = trim($_POST['nome']);
-    $apelido = trim($_POST['apelido']);
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-
-    if (empty($nome) || empty($apelido) || empty($email) || empty($password)) {
-        $_SESSION['registro_erro'] = "Preencha todos os campos!";
-        header("Location: Index.php");
-        exit();
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['registro_erro'] = "E-mail inválido!";
-        header("Location: Index.php");
-        exit();
-    }
-
-    if (strlen($password) < 8) {
-        $_SESSION['registro_erro'] = "A senha deve ter pelo menos 8 caracteres!";
-        header("Location: Index.php");
-        exit();
-    }
-
-    include('conexão.php');
-    if (!$dbc) {
-        die("Erro na conexão: " . mysqli_connect_error());
-    }
-
-    // Verificar se o e-mail já existe
-    $queryCheckEmail = "SELECT * FROM users WHERE email = ?";
-    $stmt = mysqli_prepare($dbc, $queryCheckEmail);
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if (mysqli_num_rows($result) > 0) {
-        $_SESSION['registro_erro'] = "Este e-mail já está registrado.";
-        header("Location: Index.php");
-        exit();
-    }
-
-    // Criar chave de validação e hash de senha
-    $chaveValidacao = gerarChaveAleatoria();
-    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-    // Inserir no banco
-    $query = "INSERT INTO users (nome, apelido, email, senha, chave_validacao) VALUES (?, ?, ?, ?, ?)";
-    $stmt = mysqli_prepare($dbc, $query);
-    mysqli_stmt_bind_param($stmt, "sssss", $nome, $apelido, $email, $passwordHash, $chaveValidacao);
-    mysqli_stmt_execute($stmt);
-
-    if (mysqli_affected_rows($dbc) > 0) {
-        $_SESSION['registro_sucesso'] = "registro realizado com sucesso!";
-        $_SESSION['chave_validacao'] = $chaveValidacao;
-        header("Location: Index.php");
-        exit();
-    } else {
-        $_SESSION['registro_erro'] = "Erro ao cadastrar usuário.";
-        header("Location: Index.php");
-        exit();
-    }
-    
+// Adicionar o filtro de categoria, se presente
+if (!empty($category_filter)) {
+    $query .= " AND category_id = ?";
+    $params[] = (int)$category_filter;
+    $param_types .= "i"; // Inteiro
 }
+
+// Adicionar o filtro de subcategoria, se presente
+if (!empty($sub_category_filter)) {
+    $query .= " AND sub_category_id = ?";
+    $params[] = (int)$sub_category_filter;
+    $param_types .= "i"; // Inteiro
+}
+
+// Preparar a consulta
+$stmt = $dbc->prepare($query);
+
+// Verificar se há parâmetros antes de chamar bind_param
+if (!empty($params)) {
+    $stmt->bind_param($param_types, ...$params);
+}
+
+// Executar a consulta
+$stmt->execute();
+$result = $stmt->get_result();
+
+
 ?>
 
-
-
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <meta name="author" content="Kauan Benitez" />
-        <meta name="keywords" content="livros, literatura, ficção, não-ficção, best-sellers, clássicos, livraria">
-        <meta name="description" content="Descubra o mundo dos livros na nossa livraria! Oferecemos uma ampla seleção de títulos em todas as categorias, desde best-sellers até clássicos. Compre online e receba em casa ou visite nossa loja física.">
-        <meta charset="UTF-8">
-        <meta name="robots" content="index, follow">
-        <meta name="og:title" content="Título da página">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
-        <link rel="stylesheet" href="css/login.css">
-        <script src="https://kit.fontawesome.com/bfe65bea0c.js" crossorigin="anonymous"></script>
-        <link rel="icon" href="./imagens/book-solid.svg">   
-    </head>
-    <body>
-        
-<div class="container">
-     <!-- Se $mostrarDiv for verdadeiro (registro bem-sucedido), exiba a div -->
-     <?php if ($mostrarDiv) : ?>
-    <div id="chave_validacao_div" style="display: flex; justify-content: center; align-items: center; z-index: 15; background-color: black; height: 250px; width: 250px; position: relative; top: 0; left: 500px; right: 0; bottom: 0; ">
-        <div style="text-align: center;">
-            <h4 style="color: white;">Guarde sua chave pois é necessario caso esqueça sua senha</h4>
-            <h5 style="color: white;">Sua chave de validação:</h5>
-            <p style="color: red;"><?php echo $chaveValidacao; ?></p>
-            <span id="contador_regressivo" style="color: yellow;"></span>
+<html lang="pt-br">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="author" content="Kauan Benitez" />
+    <meta name="keywords" content="livros, literatura, ficção, não-ficção, best-sellers, clássicos, livraria">
+    <meta name="description" content="Descubra o mundo dos livros na nossa livraria! Oferecemos uma ampla seleção de títulos em todas as categorias, desde best-sellers até clássicos. Compre online e receba em casa ou visite nossa loja física.">
+    <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="og:title" content="Título da página">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empower Books</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" href="./imagens/book-solid.svg">
+</head>
+<body>
+    <header>
+        <h1>EMPOWER BOOKS</h1>        
+    </header>
+
+    <nav>
+        <a href="#"><button id="menu-toggle" class="menu-toggle">&#9776;</button></a>
+        <a href="Index.php">Início</a>
+        <a href="#">Sobre</a>
+        <a href="#">Produtos</a>
+        <a href="#">Contato</a>
+
+        <div class="user-dropdown">
+    <?php if (isset($_SESSION['user']) && isset($_SESSION['user']['name'])): ?>
+        <img class="user-img" src="./imagens/user.jpg" alt="Usuário">
+        <span>Olá, <?= htmlspecialchars($_SESSION['user']['name']) ?>!</span>
+        <div class="dropdown-content">
+            <a href="minhaconta.php">Minha conta</a>
+            <a href="redefinir.php">Redefinir senha</a>
+            <a href="logout.php">Sair</a>
         </div>
-    </div>
+    <?php else: ?>
+        <a href="PagLogin.php" class="login-btn">Login</a>
+    <?php endif; ?>
+</div>
 
+
+
+
+        <!-- Formulário de pesquisa -->
+        <form action="Index.php" method="GET">
+            <input type="text" name="query" placeholder="Digite sua pesquisa..."  value="<?= isset($_GET['query']) ? htmlspecialchars($_GET['query']) : '' ?>">
+            <button type="submit">Pesquisar</button>
+        </form>
+    </nav>
     
-    <script>
-    // Função para ocultar a div após um intervalo de tempo (por exemplo, 5 segundos)
-    function ocultarChaveValidacao() {
-        var chaveDiv = document.getElementById("chave_validacao_div");
-        var contadorRegressivo = document.getElementById("contador_regressivo");
-        if (chaveDiv) {
-            var segundosRestantes = 10; // Tempo em segundos
-            var timer = setInterval(function() {
-                contadorRegressivo.textContent = "Esta mensagem desaparecerá em " + segundosRestantes + " segundos";
-                segundosRestantes--;
-                if (segundosRestantes < 0) {
-                    clearInterval(timer);
-                    chaveDiv.style.display = "none";
-                }
-            }, 1000); // Atualiza a cada segundo
+    <main>
+        <!-- Exibição dos Resultados da Pesquisa -->
+        <?php
+        if ($result->num_rows > 0) {
+            echo "<div class='livros-container'>";
+            while ($book = $result->fetch_assoc()) {
+                echo "<div class='livro-card'>
+                        <img src='" . htmlspecialchars($book['image']) . "' alt='" . htmlspecialchars($book['title']) . "'>
+                        <h2>" . htmlspecialchars($book['title']) . "</h2>
+                        <p><strong>Autor:</strong> " . htmlspecialchars($book['author']) . "</p>
+                        <p><strong>Preço:</strong> € " . number_format($book['price'], 2, ',', '.') . "</p>
+                        <a href='detalhes.php?id=" . $book['book_id'] . "' class='btn-detalhes'>Ver mais</a>
+                    </div>";
+            }
+            echo "</div>";
+        } else {
+            echo "<p>Nenhum livro encontrado.</p>";
         }
-    }
+        ?>
 
-    // Chame a função para ocultar a div
-    ocultarChaveValidacao();
-    </script>
-<?php endif; ?>
-    <div class="conteudos primeiro-conteudo">
-       <div class="primeira-coluna">
-            <h2 class="title title-primary">Bem vindo</h2>
-            <p class="description description-primary">Se já tiver uma conta</p>
-            <p class="description description-primary">faça login com suas informações pessoais.</p>
-            <button id="entrar" class="btn btn-primary">Entrar</button>
-       </div>
-       <div class="segunda-coluna">
-            <h2 class="title title-second">Crie a sua conta</h2>
-            <div class="redes-social">
-                <ul class="lista-midia-social">x
-                    <a class="link-midia-social" href="#"><li class="item-midia"><i class="fa-brands fa-facebook-f"></i></li></a>
-                    <a class="link-midia-social" href="#"><li class="item-midia"><i class="fa-brands fa-google-plus-g"></i></li></a>
-                    <a class="link-midia-social" href="#"><li class="item-midia"><i class="fa-brands fa-linkedin-in"></i></li></a>
-                </ul>
-            </div><!--Redes sociais-->
+        <!-- Filtros de categoria -->
+        <div class="navmenu">
+            <ul class="menu">
+                <?php
+                $select_categoria = mysqli_query($dbc, "SELECT * FROM categorias ORDER BY idcategoria DESC");
 
-            <p class="description description-second">Ou utilize o seu e-mail para se registar</p>
-            <form action="Index.php" class="form" id="signup-form" method="post">
-                <label class="label-input" for="">
-                    <i class="fa-regular fa-user icon-modify"></i>
-                    <input type="text" name="nome" id="username" placeholder="Nome" maxlength="50">
-                </label>
-                <label class="label-input" for="">
-                    <i class="fa-regular fa-user icon-modify"></i>
-                    <input type="text" name="apelido" id="username" placeholder="Apelido" maxlength="50">
-                </label>
-                <label class="label-input" for="">
-                    <i class="fa-regular fa-envelope icon-modify"></i>
-                    <input type="email" name="email" id="email" placeholder="Email">
-                </label>
-                <label class="label-input" for="">
-                    <i class="fa-solid fa-lock icon-modify"></i>
-                    <input type="password" name="password" placeholder="Senha" required>
-                </label>
-                <button class="btn btn-second">Increva-se</button>
-            </form>
-       </div><!--Segunda coluna-->
-    </div><!--primeiro conteudo-->
-    <div class="conteudos segundo-conteudo">
-        <div class="primeira-coluna">
-            <h2 class="title title-primary">Olá, Amigos</h2>
-            <p class="description description-primary">Insira as suas informações pessoais</p>
-            <p class="description description-primary">e comece a jornada conosco.</p>
-            <button id="inscreva" class="btn btn-primary">Inscreva-se</button>
-       </div>
-       <div class="segunda-coluna">
-            <h2 class="title title-second">Realize o login</h2>
-            <div class="redes-social">
-                <ul class="lista-midia-social">
-                    <a class="link-midia-social" href="#"><li class="item-midia"><i class="fa-brands fa-facebook-f"></i></li></a>
-                    <a class="link-midia-social" href="#"><li class="item-midia"><i class="fa-brands fa-google-plus-g"></i></li></a>
-                    <a class="link-midia-social" href="#"><li class="item-midia"><i class="fa-brands fa-linkedin-in"></i></li></a>
-                </ul>
-            </div><!--Redes sociais-->
-            <p class="description description-second">ou utilize a sua conta de email</p>
-            <form action="login.php" class="form" id="login-form" method="post">
-                <label class="label-input" for="">
-                    <i class="fa-regular fa-envelope icon-modify"></i>
-                    <input type="email" name="login_email" id="email1" placeholder="Email" maxlength="50">
-                </label>
-                <label class="label-input" for="">
-                    <i class="fa-solid fa-lock icon-modify"></i>
-                    <input type="password" name="login_senha" id="password1" placeholder="password" maxlength="50">
-                </label>
-                <a class="password" href="Esqueceu-a-senha.php">Esqueceu a sua senha?</a>
-                <button class="btn btn-second">Entrar</button>
-            </form>
-       </div><!--Segunda coluna-->
-    </div><!--Segundo Conteudo-->
-</div><!--Container-->
-<script src="js/login1.js"></script>
-    </body>
+                if (mysqli_num_rows($select_categoria) >= 1) :
+                    while ($res = mysqli_fetch_assoc($select_categoria)) :
+                ?>
+                    <li class="menu-item">
+                        <a href="#" class="category-link" data-category="<?= $res['idcategoria'] ?>">
+                            <?= htmlspecialchars($res['NomeCategoria']) ?>
+                        </a>
+
+                        <?php
+                        $subcat = mysqli_query($dbc, "SELECT * FROM subcategoria WHERE idcategoria = " . $res['idcategoria'] . " ORDER BY Nome DESC");
+
+                        if (mysqli_num_rows($subcat) >= 1) :
+                        ?>
+                        <ul class="submenu">
+                            <?php while ($linha = mysqli_fetch_assoc($subcat)) : ?>
+                            <li class="submenu-item">
+                                <a href="?category=<?= $res['idcategoria'] ?>&sub_category=<?= $linha['sub_category_id'] ?>" class="subcategory-link" data-subcategory="<?= $linha['sub_category_id'] ?>">
+                                    <?= htmlspecialchars($linha['Nome']) ?>
+                                </a>
+                            </li>
+                            <?php endwhile; ?>
+                        </ul>
+                        <?php endif; ?>
+                    </li>
+                <?php endwhile; endif; ?>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2025 EMPOWER BOOKS | Todos os direitos reservados
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="./js/principal.js"></script>
+</body>
 </html>

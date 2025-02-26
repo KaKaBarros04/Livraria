@@ -129,3 +129,27 @@ footer {
         font-size: 14px;
     }
 }
+
+nav {
+    background-color: #000000;
+    color: #fff;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+nav a:hover {
+    background-color: #fff200;
+    color: #000000;
+}
+
+main {
+    flex-grow: 1;
+}
