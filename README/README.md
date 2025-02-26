@@ -74,6 +74,6 @@ Abra um Pull Request explicando as mudanças.
 🌐 [(https://github.com/KaKaBarros04)]
 
 📜 Licença
-📝 Este projeto está licenciado sob a MIT License – você pode usá-lo, modificá-lo e distribuí-lo livremente.
+📝 Este projeto está licenciado sob a MIT License
 
 🚀 Gostou do projeto? Deixe uma ⭐ no repositório e contribua!
