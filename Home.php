@@ -20,40 +20,44 @@ $category_filter = isset($_GET['category']) ? $_GET['category'] : null;
 $sub_category_filter = isset($_GET['sub_category']) ? $_GET['sub_category'] : null;
 
 // Inicializar a consulta SQL
-$query = "SELECT * FROM books WHERE title LIKE ?";
+// Construção da query
+$query = "SELECT * FROM books WHERE 1=1";
+$params = [];
+$param_types = "";
+
+// Adicionar o filtro de pesquisa no título, se fornecido
+if (!empty($search_query)) {
+    $query .= " AND title LIKE ?";
+    $params[] = "%$search_query%";
+    $param_types .= "s"; // String
+}
 
 // Adicionar o filtro de categoria, se presente
-if ($category_filter) {
+if (!empty($category_filter)) {
     $query .= " AND category_id = ?";
+    $params[] = (int)$category_filter;
+    $param_types .= "i"; // Inteiro
 }
 
 // Adicionar o filtro de subcategoria, se presente
-if ($sub_category_filter) {
+if (!empty($sub_category_filter)) {
     $query .= " AND sub_category_id = ?";
+    $params[] = (int)$sub_category_filter;
+    $param_types .= "i"; // Inteiro
 }
 
 // Preparar a consulta
 $stmt = $dbc->prepare($query);
 
-// Definir os parâmetros da consulta
-$params = [];
-$params[] = "%$search_query%"; // Filtro de pesquisa no título
-
-if ($category_filter) {
-    $params[] = $category_filter; // Filtro de categoria
+// Verificar se há parâmetros antes de chamar bind_param
+if (!empty($params)) {
+    $stmt->bind_param($param_types, ...$params);
 }
-
-if ($sub_category_filter) {
-    $params[] = $sub_category_filter; // Filtro de subcategoria
-}
-
-// Determinar o tipo dos parâmetros e vincular
-$type_str = str_repeat('i', count($params) - 1) . 's'; // Tipo 's' para string (pesquisa) e 'i' para inteiros (categoria e subcategoria)
-$stmt->bind_param($type_str, ...$params);
 
 // Executar a consulta
 $stmt->execute();
 $result = $stmt->get_result();
+
 
 ?>
 

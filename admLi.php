@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_book'])) {
     // Upload da imagem
     $image_path = "";
     if (!empty($_FILES['image']['name'])) {
-        $target_dir = "uploads/";
+        $target_dir = "imagens/";
         $image_path = $target_dir . basename($_FILES['image']['name']);
         move_uploaded_file($_FILES['image']['tmp_name'], $image_path);
     }
