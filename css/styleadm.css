@@ -18,6 +18,10 @@ header {
     font-size: larger;
 }
 
+.AdmText{
+    text-align: center;
+}
+
 nav {
     background-color: #000000;
     color: #fff;
@@ -49,31 +53,92 @@ footer {
     padding: 1rem;
 }
 
-form {
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form input, .form textarea {
+    height: 45px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.form textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.label-input {
+    background-color: #ffffff;
     display: flex;
     align-items: center;
+    margin: 8px 0;
 }
 
-input[type="text"] {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.label-input i {
+    margin-right: 10px;
+    color: #777;
 }
 
-button {
-    padding: 5px 10px;
-    background-color: #fff200;
-    color: #000000;
+.label-input input, .label-input textarea {
+    font-size: 16px;
+    color: #333;
+}
+
+.btn {
+    background-color: #3498db;
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #000000;
+}
+
+.btn-second {
+    background-color: #fff200;
+}
+
+.btn-second:hover {
+    background-color:#fff200;
+}
+
+input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    width: 100%;
+    border-radius: 6px;
+}
+
+input[type="file"]:hover {
     cursor: pointer;
 }
+
 
 
 
 .user-dropdown {
     position: relative;
     display: inline-block;
+    right: 100px;
 }
 
 .user-dropdown .fas,
@@ -167,5 +232,64 @@ button {
 /* Adicione esta regra ao seu arquivo CSS */
 .hidden {
     overflow: hidden;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.custom-table thead {
+    background-color: #fff200;
+    color: white;
+    text-align: left;
+}
+
+.custom-table th, .custom-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.custom-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.custom-table th {
+    font-weight: bold;
+}
+
+.custom-table td {
+    color: #333;
+}
+
+.btn-edit, .btn-delete {
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-edit {
+    background-color: #000000;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #232323;
+}
+
+.btn-delete {
+    background-color: #d41702;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
 }
 

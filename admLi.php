@@ -76,7 +76,7 @@ $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
     </header>
 
     <nav>
-        <a href="#"><button id="menu-toggle" class="menu-toggle">&#9776;</button></a>
+       
         <a href="#">Início</a>
         <a href="#">Sobre</a>
         <a href="#">Produtos</a>
@@ -91,11 +91,7 @@ $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
             </div>
         </div>
         
-        <!-- Formulário de pesquisa à direita usando flexbox -->
-        <form action="/pesquisar" method="GET">
-            <input type="text" name="q" placeholder="Digite sua pesquisa...">
-            <button type="submit">Pesquisar</button>
-        </form>
+       
     </nav>
     
     <main>
@@ -141,23 +137,57 @@ $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
                 </ul>
             <?php endif; ?>
         </div>
-        <h2>Bem vindo Administrador</h2>
-        <h1>Gerenciar Livros</h1>
+        
+        <h1 class="AdmText">Gerenciar Livros</h1>
     
-    <form method="POST" enctype="multipart/form-data">
-        <input type="text" name="title" placeholder="Título" required>
-        <input type="text" name="author" placeholder="Autor" required>
-        <textarea name="description" placeholder="Descrição"></textarea>
-        <input type="number" name="price" placeholder="Preço" step="0.01" required>
-        <input type="number" name="stock" placeholder="Estoque" required>
-        <input type="number" name="category_id" placeholder="Categoria ID" required>
-        <input type="number" name="sub_category_id" placeholder="Subcategoria ID" required>
-        <input type="file" name="image">
-        <button type="submit" name="add_book">Adicionar Livro</button>
-    </form>
+        <form method="POST" enctype="multipart/form-data" class="form" id="add-book-form">
+    <label class="label-input" for="title">
+        <i class="fa-solid fa-book icon-modify"></i>
+        <input type="text" name="title" id="title" placeholder="Título" required>
+    </label>
     
-    <h2>Livros Cadastrados</h2>
-    <table border="1">
+    <label class="label-input" for="author">
+        <i class="fa-solid fa-pen icon-modify"></i>
+        <input type="text" name="author" id="author" placeholder="Autor" required>
+    </label>
+    
+    <label class="label-input" for="description">
+        <i class="fa-solid fa-align-left icon-modify"></i>
+        <textarea name="description" id="description" placeholder="Descrição"></textarea>
+    </label>
+    
+    <label class="label-input" for="price">
+        <i class="fa-solid fa-dollar-sign icon-modify"></i>
+        <input type="number" name="price" id="price" placeholder="Preço" step="0.01" required>
+    </label>
+    
+    <label class="label-input" for="stock">
+        <i class="fa-solid fa-cogs icon-modify"></i>
+        <input type="number" name="stock" id="stock" placeholder="Estoque" required>
+    </label>
+    
+    <label class="label-input" for="category_id">
+        <i class="fa-solid fa-list icon-modify"></i>
+        <input type="number" name="category_id" id="category_id" placeholder="Categoria ID" required>
+    </label>
+    
+    <label class="label-input" for="sub_category_id">
+        <i class="fa-solid fa-cogs icon-modify"></i>
+        <input type="number" name="sub_category_id" id="sub_category_id" placeholder="Subcategoria ID" required>
+    </label>
+    
+    <label class="label-input" for="image">
+        <i class="fa-solid fa-image icon-modify"></i>
+        <input type="file" name="image" id="image">
+    </label>
+
+    <button class="btn btn-second" type="submit" name="add_book">Adicionar Livro</button>
+</form>
+
+    
+    <h2 class="AdmText">Livros Cadastrados</h2>
+    <table border="1" class="custom-table">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Título</th>
@@ -166,7 +196,9 @@ $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
             <th>Estoque</th>
             <th>Ações</th>
         </tr>
+        </thead>
         <?php while ($book = $books->fetch_assoc()) : ?>
+        <tbody>
             <tr>
                 <td><?= $book['book_id'] ?></td>
                 <td><?= $book['title'] ?></td>
@@ -174,11 +206,12 @@ $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
                 <td>€ <?= number_format($book['price'], 2, ',', '.') ?></td>
                 <td><?= $book['stock'] ?></td>
                 <td>
-                    <a href="edit_book.php?id=<?= $book['book_id'] ?>">Editar</a>
-                    <a href="AdmLi.php?archive=<?= $book['book_id'] ?>" onclick="return confirm('Tem certeza que deseja arquivar este livro?')">Arquivar</a>
+                    <a href="edit_book.php?id=<?= $book['book_id'] ?>" class="btn-edit">✏️</a>
+                    <a href="AdmLi.php?archive=<?= $book['book_id'] ?>" onclick="return confirm('Tem certeza que deseja arquivar este livro?')" class="btn-delete">🗑️</a>
                 </td>
             </tr>
         <?php endwhile; ?>
+        </tbody>
     </table>
     </main>
 
