@@ -1,67 +1,77 @@
 <?php
-
 session_start();
 
-// Função para gerar uma chave aleatória
+// Função para gerar uma chave segura
 function gerarChaveAleatoria($tamanho = 7) {
-    $caracteres = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    $chave = '';
-
-    for ($i = 0; $i < $tamanho; $i++) {
-        $chave .= $caracteres[rand(0, strlen($caracteres) - 1)];
-    }
-
-    return $chave;
+    return substr(bin2hex(random_bytes($tamanho)), 0, $tamanho);
 }
 
 $mostrarDiv = false;
 
-// Processar formulários
+// Processar formulário
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Captura dos dados do formulário
     $nome = trim($_POST['nome']);
     $apelido = trim($_POST['apelido']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Validação dos campos
-    if (!empty($nome) && !empty($apelido) && !empty($email) && !empty($password)) {
-        include('conexão.php');
-
-        // Verificar se o e-mail já existe no banco
-        $queryCheckEmail = "SELECT * FROM users WHERE email = ?";
-        $stmt = mysqli_prepare($dbc, $queryCheckEmail);
-        mysqli_stmt_bind_param($stmt, "s", $email);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-
-        if (mysqli_num_rows($result) > 0) {
-            echo '<script>alert("Este e-mail já está registrado.");</script>';
-        } else {
-            // Gerar chave de validação
-            $chaveValidacao = gerarChaveAleatoria();
-
-            // Hash da senha
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-            // Preparando e executando a inserção no banco de dados
-            $query = "INSERT INTO users (nome, apelido, email, senha, chave_validacao) VALUES (?, ?, ?, ?, ?)";
-            $stmt = mysqli_prepare($dbc, $query);
-            mysqli_stmt_bind_param($stmt, "sssss", $nome, $apelido, $email, $passwordHash, $chaveValidacao);
-            mysqli_stmt_execute($stmt);
-
-            // Verificar se a inserção foi bem-sucedida
-            if (mysqli_affected_rows($dbc) > 0) {
-                $mostrarDiv = true; // Registro bem-sucedido, mostrar a chave de validação
-            } else {
-                echo '<script>alert("Erro ao cadastrar o usuário.");</script>';
-            }
-        }
-    } else {
-        echo '<script>alert("Por favor, não deixe campos em branco");</script>';
+    if (empty($nome) || empty($apelido) || empty($email) || empty($password)) {
+        $_SESSION['registro_erro'] = "Preencha todos os campos!";
+        header("Location: Index.php");
+        exit();
     }
-} else {
-    echo '<script>alert("Por favor, preencha o formulário");</script>';
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['registro_erro'] = "E-mail inválido!";
+        header("Location: Index.php");
+        exit();
+    }
+
+    if (strlen($password) < 8) {
+        $_SESSION['registro_erro'] = "A senha deve ter pelo menos 8 caracteres!";
+        header("Location: Index.php");
+        exit();
+    }
+
+    include('conexão.php');
+    if (!$dbc) {
+        die("Erro na conexão: " . mysqli_connect_error());
+    }
+
+    // Verificar se o e-mail já existe
+    $queryCheckEmail = "SELECT * FROM users WHERE email = ?";
+    $stmt = mysqli_prepare($dbc, $queryCheckEmail);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (mysqli_num_rows($result) > 0) {
+        $_SESSION['registro_erro'] = "Este e-mail já está registrado.";
+        header("Location: Index.php");
+        exit();
+    }
+
+    // Criar chave de validação e hash de senha
+    $chaveValidacao = gerarChaveAleatoria();
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+    // Inserir no banco
+    $query = "INSERT INTO users (nome, apelido, email, senha, chave_validacao) VALUES (?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($dbc, $query);
+    mysqli_stmt_bind_param($stmt, "sssss", $nome, $apelido, $email, $passwordHash, $chaveValidacao);
+    mysqli_stmt_execute($stmt);
+
+    if (mysqli_affected_rows($dbc) > 0) {
+        $_SESSION['registro_sucesso'] = "registro realizado com sucesso!";
+        $_SESSION['chave_validacao'] = $chaveValidacao;
+        header("Location: Index.php");
+        exit();
+    } else {
+        $_SESSION['registro_erro'] = "Erro ao cadastrar usuário.";
+        header("Location: Index.php");
+        exit();
+    }
+    
 }
 ?>
 
@@ -81,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <title>Login</title>
         <link rel="stylesheet" href="css/login.css">
         <script src="https://kit.fontawesome.com/bfe65bea0c.js" crossorigin="anonymous"></script>
-        <link rel="icon" href="./imagem/book-solid.svg">   
+        <link rel="icon" href="./imagens/book-solid.svg">   
     </head>
     <body>
         

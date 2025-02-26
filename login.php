@@ -1,21 +1,32 @@
 <?php 
 
-// Habilitar exibição de erros apenas para desenvolvimento (remova em produção)
+// Habilitar exibição de erros apenas para desenvolvimento
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Iniciar a sessão apenas quando necessário
+// Iniciar a sessão de forma segura
+session_set_cookie_params([
+    'httponly' => true, 
+    'secure' => isset($_SERVER['HTTPS']),
+    'samesite' => 'Strict'
+]);
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 include("conexão.php");
 
+// Verificar conexão com o banco
+if (!$dbc) {
+    die("Erro na conexão com o banco de dados: " . mysqli_connect_error());
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     // Validar se os campos foram preenchidos
     if (empty($_POST['login_email']) || empty($_POST['login_senha'])) {
-        echo "Preencha todos os campos!";
+        $_SESSION['login_error'] = "Preencha todos os campos!";
+        header("Location: login.php");
         exit();
     }
 
@@ -29,28 +40,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_stmt_execute($query);
     $result = mysqli_stmt_get_result($query);
 
-    // Verificar se o e-mail existe
+    // Verificar se o e-mail existe e validar senha
     if ($row = mysqli_fetch_assoc($result)) {
-        // Comparar a senha fornecida com o hash no banco
         if (password_verify($login_password, $row['senha'])) {
-            // Definir sessão do usuário
-            $_SESSION['user_id'] = $row['user_id'];  // Usando 'user_id' que é a chave primária
+            $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['user_name'] = $row['nome'];
-
-            // Redirecionar para a página inicial
             header("Location: Home.php");
             exit();
-        } else {
-            echo "Senha incorreta!";
         }
-    } else {
-        echo "E-mail não registrado! Por favor, crie uma conta.";
     }
+    
+    // Se falhar, mensagem genérica
+    $_SESSION['login_error'] = "E-mail ou senha inválidos!";
+    header("Location: login.php");
+    exit();
 
-    // Fechar a conexão
-    mysqli_stmt_close($query);
-    mysqli_close($dbc);
 } else {
-    echo "Acesso inválido!";
+    http_response_code(403);
+    echo "Email ou senha inválidos!";
 }
+
+
 ?>
+

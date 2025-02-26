@@ -52,6 +52,15 @@ $dbc->query($query);
 // Listar Livros
 $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
 
+// Consultar categorias
+$categories_query = "SELECT * FROM categorias";
+$categories_result = $dbc->query($categories_query);
+
+// Consultar subcategorias (você pode precisar de um filtro para subcategorias relacionadas a uma categoria específica, se houver)
+$sub_categories_query = "SELECT * FROM subcategoria";
+$sub_categories_result = $dbc->query($sub_categories_query);
+
+
 
 ?>
 
@@ -124,15 +133,28 @@ $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
         <input type="number" name="stock" id="stock" placeholder="Estoque" required>
     </label>
     
-    <label class="label-input" for="category_id">
+     <!-- Campo de Categoria -->
+     <label class="label-input" for="category_id">
         <i class="fa-solid fa-list icon-modify"></i>
-        <input type="number" name="category_id" id="category_id" placeholder="Categoria ID" required>
+        <select name="category_id" id="category_id" required>
+            <option value="">Selecione uma Categoria</option>
+            <?php while ($category = $categories_result->fetch_assoc()) : ?>
+                <option value="<?= $category['idcategoria'] ?>"><?= $category['NomeCategoria'] ?></option>
+            <?php endwhile; ?>
+        </select>
     </label>
-    
+
+    <!-- Campo de Subcategoria -->
     <label class="label-input" for="sub_category_id">
         <i class="fa-solid fa-cogs icon-modify"></i>
-        <input type="number" name="sub_category_id" id="sub_category_id" placeholder="Subcategoria ID" required>
+        <select name="sub_category_id" id="sub_category_id" required>
+            <option value="">Selecione uma Subcategoria</option>
+            <?php while ($sub_category = $sub_categories_result->fetch_assoc()) : ?>
+                <option value="<?= $sub_category['sub_category_id'] ?>"><?= $sub_category['Nome'] ?></option>
+            <?php endwhile; ?>
+        </select>
     </label>
+
     
     <label class="label-input" for="image">
         <i class="fa-solid fa-image icon-modify"></i>
