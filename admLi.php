@@ -95,48 +95,6 @@ $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
     </nav>
     
     <main>
-       
-        
-        
-        <div class="navmenu">
-            <?php
-            // Conexão com o banco de dados 
-            include('conexão.php');
-
-            // Verifique se a conexão falhou
-            if (!$dbc) {
-                die("Não foi possível conectar ao banco de dados: " . mysqli_connect_error());
-            }
-
-            $select_categoria = mysqli_query($dbc, "SELECT * FROM categorias ORDER BY idcategoria DESC");
-
-            if (mysqli_num_rows($select_categoria) >= 1) :
-            ?>
-                <ul class="menu">
-                    <?php while ($res = mysqli_fetch_assoc($select_categoria)) : ?>
-                        <li class="menu-item">
-                            <!-- Adicione o parâmetro sub_category_id ao href -->
-                            <a href="subcategorias.php?sub_category_id=<?= $res['idcategoria'] ?>"><?= $res['NomeCategoria'] ?></a>
-
-                            <?php
-                            // Se existirem subcategorias, exiba-as
-                            $subcat = mysqli_query($dbc, "SELECT * FROM subcategoria WHERE idcategoria = " . $res['idcategoria'] . " ORDER BY Nome DESC");
-
-                            if (mysqli_num_rows($subcat) >= 1) :
-                            ?>
-                                <ul class="submenu">
-                                    <?php while ($linha = mysqli_fetch_assoc($subcat)) : ?>
-                                        <li class="submenu-item">
-                                            <a href="<?= $linha['slug'] ?>"><?= $linha['Nome'] ?></a>
-                                        </li>
-                                    <?php endwhile; ?>
-                                </ul>
-                            <?php endif; ?>
-                        </li>
-                    <?php endwhile; ?>
-                </ul>
-            <?php endif; ?>
-        </div>
         
         <h1 class="AdmText">Gerenciar Livros</h1>
     
@@ -206,13 +164,16 @@ $books = $dbc->query("SELECT * FROM books WHERE archived_at IS NULL");
                 <td>€ <?= number_format($book['price'], 2, ',', '.') ?></td>
                 <td><?= $book['stock'] ?></td>
                 <td>
-                    <a href="edit_book.php?id=<?= $book['book_id'] ?>" class="btn-edit">✏️</a>
+                    <a href="editar-livros.php?id=<?= $book['book_id'] ?>" class="btn-edit">✏️</a>
                     <a href="AdmLi.php?archive=<?= $book['book_id'] ?>" onclick="return confirm('Tem certeza que deseja arquivar este livro?')" class="btn-delete">🗑️</a>
                 </td>
             </tr>
         <?php endwhile; ?>
         </tbody>
     </table>
+            <div class="Aqv">
+                 <a class="liaqv" href="livros-arquivados.php">Livros Excluindo</a>
+            </div>
     </main>
 
     <footer>

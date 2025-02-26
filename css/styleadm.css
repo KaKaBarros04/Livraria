@@ -293,3 +293,23 @@ input[type="file"]:hover {
     background-color: #c0392b;
 }
 
+.Aqv {
+    background-color: #232323;
+    width: 100px;
+    position: relative;
+    margin: 0 auto; /* Centraliza horizontalmente */
+    border-radius: 10%;
+    text-align: center;
+    padding: 10px 0; /* Adiciona um pouco de espaçamento interno para o link */
+}
+
+.liaqv {
+    text-align: center;
+    text-decoration: none; /* Remove o sublinhado do link */
+    color: #fff; /* Defina a cor do texto */
+    
+}
+
+.liaqv:hover {
+    color: #fff200; /* Muda a cor quando o mouse passa sobre o link */
+}
