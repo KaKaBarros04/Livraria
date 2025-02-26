@@ -25,51 +25,42 @@ MySQL (banco de dados para armazenar usuários, livros e pedidos)
 🔹 Outras Tecnologias
 XAMPP/WAMP (para rodar o servidor localmente)
 Git e GitHub (controle de versão)
+
 📌 Instalação e Configuração
 1️⃣ Clone o repositório
-
-sh
-Copiar
-Editar
 git clone https://github.com/seu-usuario/EmpowerBooks.git
-2️⃣ Configure o banco de dados
 
-Crie um banco de dados chamado empower_books no MySQL.
+2️⃣ Configure o banco de dados
+Crie um banco de dados chamado dados_livraria no MySQL.
 Importe o arquivo banco_de_dados/dados_livraria.sql para criar as tabelas necessárias.
+
 3️⃣ Configure as credenciais do banco no projeto
 No arquivo conexao.php, edite as credenciais:
-
-php
-Copiar
-Editar
 $host = "localhost";
 $user = "root";  // Substitua pelo seu usuário do MySQL
 $password = "";  // Substitua pela sua senha do MySQL
 $database = "empower_books";
 $dbc = mysqli_connect($host, $user, $password, $database);
-4️⃣ Inicie o servidor localmente
 
+4️⃣ Inicie o servidor localmente
 Se estiver usando o XAMPP, inicie o Apache e o MySQL.
-Acesse http://localhost/EmpowerBooks/ no navegador.
+Acesse http://localhost/dados_livraria/ no navegador.
+
 👥 Como Contribuir
 💡 Quer ajudar a melhorar o Empower Books? Siga estes passos:
-
 Faça um fork deste repositório.
 Crie uma branch para sua nova feature:
-sh
-Copiar
-Editar
+
 git checkout -b minha-nova-feature
+
 Faça as alterações e commite:
-sh
-Copiar
-Editar
+
 git commit -m "Adicionei uma nova funcionalidade"
+
 Envie para o seu repositório remoto:
-sh
-Copiar
-Editar
+
 git push origin minha-nova-feature
+
 Abra um Pull Request explicando as mudanças.
 💡 Sugestões de melhorias:
 🔹 Implementar um sistema de cupons de desconto.
@@ -78,8 +69,9 @@ Abra um Pull Request explicando as mudanças.
 
 ✒️ Autor
 👤 Kauan Benitez
-📧 [Seu email ou contato opcional]
-🌐 [Seu site ou perfil no GitHub]
+📧 [kauanbenitez04@gmail.com
++351 935610979 ]
+🌐 [(https://github.com/KaKaBarros04)]
 
 📜 Licença
 📝 Este projeto está licenciado sob a MIT License – você pode usá-lo, modificá-lo e distribuí-lo livremente.
