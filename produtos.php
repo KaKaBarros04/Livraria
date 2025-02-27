@@ -71,7 +71,7 @@ $result = mysqli_query($dbc, $query);
         </form>
     </nav>
 
-    <main class="container mt-4">
+    <main class="container-lg mt-4">
         <div class="row mb-3">
             <div class="col-md-6">
                 <h2 class="text-warning">Nossos Livros</h2>
@@ -100,7 +100,7 @@ $result = mysqli_query($dbc, $query);
                             <p class="card-text"><strong>Preço:</strong> € <?= number_format($book['price'], 2, ',', '.') ?></p>
                             <a href='detalhes.php?id=<?= $book['book_id'] ?>' class='btn btn-primary'>Ver mais</a>
                             <?php
-                            echo "
+                            echo "<br>
                             <input type='number' name='quantity' value='1' min='1' class='quantity' required>
                         <button class='btn-adicionar' 
                             data-book-id='" . $book['book_id'] . "' 
@@ -110,7 +110,7 @@ $result = mysqli_query($dbc, $query);
                         </button>
                     </form>
                     <a href='checkout.php?book_id=" . $book['book_id'] . "&quantity=1' class='btn-comprar'>
-        Comprar Agora
+        Compra rapida
     </a>
     "  ?>
                         </div>

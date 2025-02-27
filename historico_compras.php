@@ -87,11 +87,11 @@ while ($row = $result->fetch_assoc()) {
                 <td></td> <!-- Célula em branco para alinhamento -->
                 <td><?= htmlspecialchars($order['title']) ?></td>
                 <td><?= $order['quantity'] ?></td>
-                <td>R$ <?= number_format($order['price'], 2, ',', '.') ?></td>
-                <td>R$ <?= number_format($order['price'] * $order['quantity'], 2, ',', '.') ?></td>
+                <td>€ <?= number_format($order['price'], 2, ',', '.') ?></td>
+                <td>€ <?= number_format($order['price'] * $order['quantity'], 2, ',', '.') ?></td>
             </tr>
         <?php } ?>
-        <tr><td colspan="4" style="text-align:right"><strong>Total:</strong></td><td><strong>R$ <?= number_format($order_total, 2, ',', '.') ?></strong></td></tr>
+        <tr><td colspan="4" style="text-align:right"><strong>Total:</strong></td><td><strong>€ <?= number_format($order_total, 2, ',', '.') ?></strong></td></tr>
     </table>
 <?php else: ?>
     <p>Você ainda não fez nenhuma compra.</p>

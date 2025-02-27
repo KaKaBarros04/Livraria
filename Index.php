@@ -62,6 +62,8 @@ $result = $stmt->get_result();
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <!-- Adicionando o Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJfQ2z8MXt6jPqGYO5yf3M1+Tl8Xq0bMjjcFrWEmya1P+vWo6dLrDQw9c0Q5" crossorigin="anonymous">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="author" content="Kauan Benitez" />
     <meta name="keywords" content="livros, literatura, ficção, não-ficção, best-sellers, clássicos, livraria">
@@ -74,6 +76,7 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="./css/style.css">
     <link rel="icon" href="./imagens/book-solid.svg">
 </head>
+
 <body>
     <header>
         <h1>EMPOWER BOOKS</h1>        
@@ -102,12 +105,17 @@ $result = $stmt->get_result();
 
       <a href="cart.php">🛒</a>
 
-
-        <!-- Formulário de pesquisa -->
-        <form action="Index.php" method="GET">
-            <input type="text" name="query" placeholder="Digite sua pesquisa..."  value="<?= isset($_GET['query']) ? htmlspecialchars($_GET['query']) : '' ?>">
-            <button type="submit">Pesquisar</button>
+<!-- Formulário de Pesquisa -->
+<div class="container my-4">
+        <form action="Index.php" method="GET" class="row">
+            <div class="col-md-8">
+                <input type="text" name="query" class="form-control" placeholder="Digite sua pesquisa..." value="<?= isset($_GET['query']) ? htmlspecialchars($_GET['query']) : '' ?>">
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">Pesquisar</button>
+            </div>
         </form>
+    </div>
     </nav>
     
     <main>
@@ -133,7 +141,7 @@ $result = $stmt->get_result();
                         </button>
                     </form>
                     <a href='checkout.php?book_id=" . $book['book_id'] . "&quantity=1' class='btn-comprar'>
-        Comprar Agora
+        Compra rapida
     </a>
                 </div>";
         }
@@ -184,6 +192,7 @@ $result = $stmt->get_result();
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script src="./js/principal.js"></script>
 </body>
 </html>

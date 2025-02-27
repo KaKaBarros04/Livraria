@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26-Fev-2025 às 03:45
+-- Tempo de geração: 27-Fev-2025 às 19:32
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -128,19 +128,33 @@ CREATE TABLE `orders` (
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Extraindo dados da tabela `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `total_price`, `status`, `delivery_address`, `payment_method`, `created_at`, `updated_at`) VALUES
+(1, 3, '2025-02-27 18:31:31', 39.90, 'pending', 'Rua Alfredo Keil 3, Almada', 'credit_card', '2025-02-27 18:31:31', '2025-02-27 18:31:31');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `order_details`
+-- Estrutura da tabela `order_items`
 --
 
-CREATE TABLE `order_details` (
-  `order_detail_id` int(11) NOT NULL,
+CREATE TABLE `order_items` (
+  `order_item_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price_at_time_of_order` decimal(10,2) NOT NULL
+  `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `order_items`
+--
+
+INSERT INTO `order_items` (`order_item_id`, `order_id`, `book_id`, `quantity`, `price`) VALUES
+(1, 1, 2, 1, 39.90);
 
 -- --------------------------------------------------------
 
@@ -197,18 +211,19 @@ CREATE TABLE `users` (
   `role` enum('user','admin') DEFAULT 'user',
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `chave_validacao` varchar(255) NOT NULL
+  `chave_validacao` varchar(255) NOT NULL,
+  `profile_image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `senha`, `nome`, `apelido`, `phone_number`, `role`, `created_at`, `updated_at`, `chave_validacao`) VALUES
-(1, '', 'kauanbenitez04@gmail.com', '$2y$10$iDlW1w0mIaHYIrhP6BpGB.jG6xU4wkySpXMObqBseQWIZTQRf6qmq', 'Kauan', 'Benitez', NULL, 'user', '2025-02-18 21:19:49', '2025-02-18 21:19:49', 'YL4M73s'),
-(3, '', 'kauanbenitez4@gmail.com', '$2y$10$Xxv/sdf3bSjGr2znzW1ho.ho7N.boDSt3/Kh2yklZTjX9Y5XAatGe', 'KaKa', 'brs', NULL, 'user', '2025-02-26 00:45:12', '2025-02-26 00:45:12', 'yIdDPjn'),
-(4, '', 'maravidal888@gmail.com', '$2y$10$qgS/rIRD95Xtj5o1VknlROruAB70ZUdd3OsutphqnQ6mAOun83SHe', 'KK', 'Benitez', NULL, 'user', '2025-02-26 02:33:28', '2025-02-26 02:33:28', '78f819a'),
-(5, '', 'kauanbenitez46@gmail.com', '$2y$10$z/Ok4X.mWwH9DxI3LbtqFOLaqJxkycEC5O407Vvlnu40wc.ydO0ce', 'KK', 'Benitez', NULL, 'user', '2025-02-26 02:35:08', '2025-02-26 02:35:08', '09ba0ae');
+INSERT INTO `users` (`user_id`, `username`, `email`, `senha`, `nome`, `apelido`, `phone_number`, `role`, `created_at`, `updated_at`, `chave_validacao`, `profile_image`) VALUES
+(1, '', 'kauanbenitez04@gmail.com', '$2y$10$iDlW1w0mIaHYIrhP6BpGB.jG6xU4wkySpXMObqBseQWIZTQRf6qmq', 'Kauan', 'Benitez', NULL, 'user', '2025-02-18 21:19:49', '2025-02-18 21:19:49', 'YL4M73s', NULL),
+(3, '', 'kauanbenitez4@gmail.com', '$2y$10$Xxv/sdf3bSjGr2znzW1ho.ho7N.boDSt3/Kh2yklZTjX9Y5XAatGe', 'KaKa', 'brs', NULL, 'user', '2025-02-26 00:45:12', '2025-02-27 18:27:36', 'yIdDPjn', 'imagens/14.jpg'),
+(4, '', 'maravidal888@gmail.com', '$2y$10$qgS/rIRD95Xtj5o1VknlROruAB70ZUdd3OsutphqnQ6mAOun83SHe', 'KK', 'Benitez', NULL, 'user', '2025-02-26 02:33:28', '2025-02-26 02:33:28', '78f819a', NULL),
+(5, '', 'kauanbenitez46@gmail.com', '$2y$10$z/Ok4X.mWwH9DxI3LbtqFOLaqJxkycEC5O407Vvlnu40wc.ydO0ce', 'KK', 'Benitez', NULL, 'user', '2025-02-26 02:35:08', '2025-02-26 02:35:08', '09ba0ae', NULL);
 
 --
 -- Índices para tabelas despejadas
@@ -244,12 +259,12 @@ ALTER TABLE `orders`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Índices para tabela `order_details`
+-- Índices para tabela `order_items`
 --
-ALTER TABLE `order_details`
-  ADD PRIMARY KEY (`order_detail_id`),
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`order_item_id`),
   ADD KEY `order_id` (`order_id`),
-  ADD KEY `book_id` (`book_id`);
+  ADD KEY `product_id` (`book_id`);
 
 --
 -- Índices para tabela `subcategoria`
@@ -291,13 +306,13 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de tabela `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de tabela `order_details`
+-- AUTO_INCREMENT de tabela `order_items`
 --
-ALTER TABLE `order_details`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `order_items`
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `subcategoria`
@@ -336,11 +351,11 @@ ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
--- Limitadores para a tabela `order_details`
+-- Limitadores para a tabela `order_items`
 --
-ALTER TABLE `order_details`
-  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-  ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`);
+ALTER TABLE `order_items`
+  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`);
 
 --
 -- Limitadores para a tabela `subcategoria`

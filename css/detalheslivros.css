@@ -74,7 +74,7 @@ footer {
 
 .livro-detalhes a {
     display: inline-block;
-    background-color: #3498db;
+    background-color: #000000;
     color: white;
     padding: 10px 20px;
     text-decoration: none;
@@ -84,7 +84,8 @@ footer {
 }
 
 .livro-detalhes a:hover {
-    background-color: #2980b9;
+    background-color: #dedede;
+    color: #000000;
 }
 
 /* Responsividade */
