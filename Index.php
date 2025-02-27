@@ -56,6 +56,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 
+
 ?>
 
 <!DOCTYPE html>
@@ -99,7 +100,7 @@ $result = $stmt->get_result();
     <?php endif; ?>
 </div>
 
-
+      <a href="cart.php">🛒</a>
 
 
         <!-- Formulário de pesquisa -->
@@ -112,22 +113,36 @@ $result = $stmt->get_result();
     <main>
         <!-- Exibição dos Resultados da Pesquisa -->
         <?php
-        if ($result->num_rows > 0) {
-            echo "<div class='livros-container'>";
-            while ($book = $result->fetch_assoc()) {
-                echo "<div class='livro-card'>
-                        <img src='" . htmlspecialchars($book['image']) . "' alt='" . htmlspecialchars($book['title']) . "'>
-                        <h2>" . htmlspecialchars($book['title']) . "</h2>
-                        <p><strong>Autor:</strong> " . htmlspecialchars($book['author']) . "</p>
-                        <p><strong>Preço:</strong> € " . number_format($book['price'], 2, ',', '.') . "</p>
-                        <a href='detalhes.php?id=" . $book['book_id'] . "' class='btn-detalhes'>Ver mais</a>
-                    </div>";
-            }
-            echo "</div>";
-        } else {
-            echo "<p>Nenhum livro encontrado.</p>";
+   if ($result->num_rows > 0) {
+        echo "<div class='livros-container'>";
+        while ($book = $result->fetch_assoc()) {
+            echo "<div class='livro-card'>
+                    <img src='" . htmlspecialchars($book['image']) . "' alt='" . htmlspecialchars($book['title']) . "'>
+                    <h2>" . htmlspecialchars($book['title']) . "</h2>
+                    <p><strong>Autor:</strong> " . htmlspecialchars($book['author']) . "</p>
+                    <p><strong>Preço:</strong> € " . number_format($book['price'], 2, ',', '.') . "</p>
+                    <a href='detalhes.php?id=" . $book['book_id'] . "' class='btn-detalhes'>Ver mais</a>
+                    <form action='cart.php' method='POST'>
+                        <input type='hidden' name='book_id' value='" . $book['book_id'] . "'>
+                        <input type='number' name='quantity' value='1' min='1' class='quantity' required>
+                        <button class='btn-adicionar' 
+                            data-book-id='" . $book['book_id'] . "' 
+                            data-book-title='" . htmlspecialchars($book['title']) . "' 
+                            data-book-price='" . number_format($book['price'], 2, ',', '.') . "'>
+                            Adicionar ao Carrinho
+                        </button>
+                    </form>
+                    <a href='checkout.php?book_id=" . $book['book_id'] . "&quantity=1' class='btn-comprar'>
+        Comprar Agora
+    </a>
+                </div>";
         }
-        ?>
+        echo "</div>";
+    } // Fechamento do if
+?>
+
+    
+        
 
         <!-- Filtros de categoria -->
         <div class="navmenu">

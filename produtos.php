@@ -41,6 +41,7 @@ $result = mysqli_query($dbc, $query);
     </header>
 
     <nav>
+        <a href="#"><button id="menu-toggle" class="menu-toggle">&#9776;</button></a>
         <a href="Index.php">Início</a>
         <a href="sobrenos.php">Sobre</a>
         <a href="produtos.php">Produtos</a>
@@ -60,7 +61,7 @@ $result = mysqli_query($dbc, $query);
     <?php endif; ?>
 </div>
 
-
+      <a href="cart.php">🛒</a>
 
 
         <!-- Formulário de pesquisa -->
@@ -98,6 +99,20 @@ $result = mysqli_query($dbc, $query);
                             <p class="card-text"><strong>Autor:</strong> <?= htmlspecialchars($book['author']) ?></p>
                             <p class="card-text"><strong>Preço:</strong> € <?= number_format($book['price'], 2, ',', '.') ?></p>
                             <a href='detalhes.php?id=<?= $book['book_id'] ?>' class='btn btn-primary'>Ver mais</a>
+                            <?php
+                            echo "
+                            <input type='number' name='quantity' value='1' min='1' class='quantity' required>
+                        <button class='btn-adicionar' 
+                            data-book-id='" . $book['book_id'] . "' 
+                            data-book-title='" . htmlspecialchars($book['title']) . "' 
+                            data-book-price='" . number_format($book['price'], 2, ',', '.') . "'>
+                            Adicionar ao Carrinho
+                        </button>
+                    </form>
+                    <a href='checkout.php?book_id=" . $book['book_id'] . "&quantity=1' class='btn-comprar'>
+        Comprar Agora
+    </a>
+    "  ?>
                         </div>
                     </div>
                 </div>
@@ -110,5 +125,6 @@ $result = mysqli_query($dbc, $query);
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/produtos.js"></script>
 </body>
 </html>

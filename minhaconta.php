@@ -67,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_image'])) {
 
 <nav>
     <a href="Index.php">Início</a>
+    <a href="historico_compras.php">Histórico de compras</a>
     <a href="logout.php">Sair</a>
 </nav>
 
