@@ -89,17 +89,29 @@ if (isset($_GET['remove'])) {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJfQ2z8MXt6jPqGYO5yf3M1+Tl8Xq0bMjjcFrWEmya1P+vWo6dLrDQw9c0Q5" crossorigin="anonymous">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="author" content="Kauan Benitez" />
+    <meta name="keywords" content="livros, literatura, ficção, não-ficção, best-sellers, clássicos, livraria">
+    <meta name="description" content="Descubra o mundo dos livros na nossa livraria! Oferecemos uma ampla seleção de títulos em todas as categorias, desde best-sellers até clássicos. Compre online e receba em casa ou visite nossa loja física.">
     <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="og:title" content="Título da página">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho de Compras</title>
+    <link rel="stylesheet" href="./css/cart.css">
+    <link rel="icon" href="./imagens/shopping-cart-svgrepo-com.svg">
 </head>
 <body>
+    <header>
     <h1>Carrinho de Compras</h1>
+</header>
     <nav>
     <a href="Index.php">Inicio</a>
     <a href="produtos.php">Produtos</a>
     </nav>
-
+<div class="table">
     <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
         <table border="1">
             <tr>
@@ -132,7 +144,7 @@ if (isset($_GET['remove'])) {
                     <td><?php echo $item['quantity']; ?></td>
                     <td>€ <?php echo number_format($book['price'], 2, ',', '.'); ?></td>
                     <td>€ <?php echo number_format($book['price'] * $item['quantity'], 2, ',', '.'); ?></td>
-                    <td><a href="?remove=<?php echo $book_id; ?>">Remover</a></td>
+                    <td><a href="?remove=<?php echo $book_id; ?>" class="remover"><b>Remover</b></a></td>
                 </tr>
             <?php
                 $total += $book['price'] * $item['quantity'];
@@ -140,7 +152,7 @@ if (isset($_GET['remove'])) {
             ?>
 
         </table>
-
+        </div>
         <h2>Total: €<?php echo number_format($total, 2, ',', '.'); ?></h2>
 
         <form action="checkout.php" method="POST">
@@ -151,6 +163,11 @@ if (isset($_GET['remove'])) {
     <?php endif; ?>
 
     <br>
-    <a href="index.php">Continuar comprando</a>
+        <div class="div-btn"><a href="index.php" class="btn">Continuar comprando</a></div>
+    
+
+    <footer>
+        &copy; 2025 EMPOWER BOOKS | Todos os direitos reservados
+    </footer>
 </body>
 </html>

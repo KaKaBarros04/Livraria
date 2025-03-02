@@ -121,15 +121,29 @@ if (isset($_GET['book_id'])) {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJfQ2z8MXt6jPqGYO5yf3M1+Tl8Xq0bMjjcFrWEmya1P+vWo6dLrDQw9c0Q5" crossorigin="anonymous">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="author" content="Kauan Benitez" />
+    <meta name="keywords" content="livros, literatura, ficção, não-ficção, best-sellers, clássicos, livraria">
+    <meta name="description" content="Descubra o mundo dos livros na nossa livraria! Oferecemos uma ampla seleção de títulos em todas as categorias, desde best-sellers até clássicos. Compre online e receba em casa ou visite nossa loja física.">
     <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="og:title" content="checkout">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - Finalizar Compra</title>
+    <link rel="stylesheet" href="./css/checkout.css">
+    <link rel="icon" href="./imagens/shopping-bag-svgrepo-com.svg">
 </head>
 <body>
+    <header>
     <h1>Finalizar Compra</h1>
-
+    </header>
     <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
-        <h2>Resumo do Carrinho</h2>
+        <nav>
+        <h2 class="r">Resumo do Carrinho</h2>
+        </nav>
+        <div class="table">
         <table border="1">
             <tr>
                 <th>Livro</th>
@@ -165,7 +179,7 @@ if (isset($_GET['book_id'])) {
             ?>
 
         </table>
-
+        </div>
         <h3>Total: € <?php echo number_format($total, 2, ',', '.'); ?></h3>
 
         <h2>Informações de Pagamento</h2>
@@ -190,6 +204,12 @@ if (isset($_GET['book_id'])) {
     <?php endif; ?>
 
     <br>
-    <a href="cart.php">Voltar ao Carrinho</a>
+    <div class="div-vlt">
+    <a href="cart.php" class="Voltar">Voltar ao Carrinho</a>
+    </div>
+    <footer>
+        &copy; 2025 EMPOWER BOOKS | Todos os direitos reservados
+    </footer>
+
 </body>
 </html>

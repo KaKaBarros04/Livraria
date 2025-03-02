@@ -106,7 +106,7 @@ $result = mysqli_query($dbc, $query);
                             data-book-id='" . $book['book_id'] . "' 
                             data-book-title='" . htmlspecialchars($book['title']) . "' 
                             data-book-price='" . number_format($book['price'], 2, ',', '.') . "'>
-                            Adicionar ao Carrinho
+                            Adicionar ao 🛒
                         </button>
                     </form>
                     <a href='checkout.php?book_id=" . $book['book_id'] . "&quantity=1' class='btn-comprar'>

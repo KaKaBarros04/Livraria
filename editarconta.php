@@ -78,9 +78,18 @@ if (isset($_POST['senha_atual']) && isset($_POST['nova_senha']) && !empty($_POST
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJfQ2z8MXt6jPqGYO5yf3M1+Tl8Xq0bMjjcFrWEmya1P+vWo6dLrDQw9c0Q5" crossorigin="anonymous">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="author" content="Kauan Benitez" />
+    <meta name="keywords" content="livros, literatura, ficção, não-ficção, best-sellers, clássicos, livraria">
+    <meta name="description" content="Descubra o mundo dos livros na nossa livraria! Oferecemos uma ampla seleção de títulos em todas as categorias, desde best-sellers até clássicos. Compre online e receba em casa ou visite nossa loja física.">
     <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="og:title" content="Título da página">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Conta</title>
-    <link rel="stylesheet" href="./css/minhaconta.css">
+    <link rel="stylesheet" href="./css/editar_acc.css">
+    <link rel="icon" href="./imagens/pencil-svgrepo-com.svg">
 </head>
 <body>
 

@@ -1,0 +1,50 @@
+/* Estilo para o corpo e a página inteira */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+header {
+    background-image: url('../imagens/list-svgrepo-com.svg');
+    background-size: 100px;
+    background-position: 33% 50%;
+    background-color: #fff200;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding: 4.5rem;
+    font-size: larger;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px; /* Espaço interno nas células */
+    border: 1px solid #000000; /* Define a borda da tabela */
+    text-align: left; /* Alinha o texto à esquerda (padrão) */
+}
+.pedidos{
+ background-color: black;
+ color: #f2f2f2;
+}
+.btn_voltar{
+    display: inline-block;
+    padding: 8px 12px;
+    background: #000000;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.btn_voltar:hover{
+    background: #dedede;
+    color: #000000;
+}

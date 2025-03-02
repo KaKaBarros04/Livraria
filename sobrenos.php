@@ -7,9 +7,18 @@
  <!DOCTYPE html>
     <html lang="pt-br">
     <head>
-        <meta charset="UTF-8">
-        <title>Sobre Nós - Empower Books</title>
-        <link rel="stylesheet" href="./css/tres.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJfQ2z8MXt6jPqGYO5yf3M1+Tl8Xq0bMjjcFrWEmya1P+vWo6dLrDQw9c0Q5" crossorigin="anonymous">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="author" content="Kauan Benitez" />
+    <meta name="keywords" content="livros, literatura, ficção, não-ficção, best-sellers, clássicos, livraria">
+    <meta name="description" content="Descubra o mundo dos livros na nossa livraria! Oferecemos uma ampla seleção de títulos em todas as categorias, desde best-sellers até clássicos. Compre online e receba em casa ou visite nossa loja física.">
+    <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="og:title" content="Sobre Nós">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós - Empower Books</title>
+    <link rel="stylesheet" href="./css/sobre.css">
+    <link rel="icon" href="./imagens/person-wave-svgrepo-com.svg">
     </head>
     <body>
         <header>

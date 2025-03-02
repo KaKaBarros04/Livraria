@@ -2,6 +2,7 @@
 // Conectar ao banco de dados
 include('conexão.php');
 
+
 // Verificar se um ID foi passado na URL
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $book_id = $_GET['id'];
@@ -45,7 +46,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <h2><?= htmlspecialchars($book['title']) ?></h2>
             <p><strong>Autor:</strong> <?= htmlspecialchars($book['author']) ?></p>
             <p><strong>Descrição:</strong> <?= nl2br(htmlspecialchars($book['description'])) ?></p>
-            <p><strong>Preço:</strong> R$ <?= number_format($book['price'], 2, ',', '.') ?></p>
+            <p><strong>Preço:</strong> € <?= number_format($book['price'], 2, ',', '.') ?></p>
+            <a href="checkout.php?book_id=<?= $book['book_id'] ?>&quantity=1" class='btn-comprar'>
+             Compra rapida
+            </a>
             <a href="index.php">Voltar</a>
         </div>
     </main>

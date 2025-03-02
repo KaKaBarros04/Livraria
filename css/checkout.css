@@ -1,0 +1,114 @@
+/* Estilo para o corpo e a página inteira */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+header {
+    background-image: url('../imagens/shopping-bag-svgrepo-com.svg');
+    background-size: 100px;
+    background-position: 33% 50%;
+    background-color: #fff200;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding: 4.5rem;
+    font-size: larger;
+}
+
+nav {
+    background-color: #000000;
+    color: #fff;
+    padding: 0.5rem;
+    justify-content: space-between;
+    text-align: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+nav a:hover {
+    background-color: #fff200;
+    color: #000000;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    background-color: #000000;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+}
+.table{
+    width: 80%; /* Define a largura da tabela */
+            margin: 0 auto; /* Centraliza a tabela na página */
+            border-collapse: collapse;
+            margin-left: 39%;
+}
+th, td {
+    padding: 10px; /* Espaço interno nas células */
+    border: 1px solid #ddd; /* Define a borda da tabela */
+    text-align: left; /* Alinha o texto à esquerda (padrão) */
+}
+form {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+form input[type="text"] {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #fff200;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #957802;
+}
+select {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: border-color 0.3s ease-in-out;
+}
+select:focus {
+    border-color: #ffcc00;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+.div-vlt{
+    margin-bottom: 5px;
+}
+.Voltar{
+    background-color: black;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+.Voltar:hover{
+    background-color: #fff200;
+    color: #000000;
+}

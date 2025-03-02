@@ -91,7 +91,8 @@ $result = $stmt->get_result();
 
         <div class="user-dropdown">
     <?php if (isset($_SESSION['user']) && isset($_SESSION['user']['name'])): ?>
-        <img class="user-img" src="./imagens/user.jpg" alt="Usuário">
+        <img class="user-img" src="<?= isset($_SESSION['user']['profile_image']) ? $_SESSION['user']['profile_image'] : './imagens/user.jpg' ?>" alt="Usuário">
+
         <span>Olá, <?= htmlspecialchars($_SESSION['user']['name']) ?>!</span>
         <div class="dropdown-content">
             <a href="minhaconta.php">Minha conta</a>
@@ -137,7 +138,7 @@ $result = $stmt->get_result();
                             data-book-id='" . $book['book_id'] . "' 
                             data-book-title='" . htmlspecialchars($book['title']) . "' 
                             data-book-price='" . number_format($book['price'], 2, ',', '.') . "'>
-                            Adicionar ao Carrinho
+                            Adicionar ao 🛒
                         </button>
                     </form>
                     <a href='checkout.php?book_id=" . $book['book_id'] . "&quantity=1' class='btn-comprar'>
