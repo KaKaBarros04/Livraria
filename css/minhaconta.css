@@ -72,13 +72,17 @@ h2 {
     color: #333;
 }
 
-a {
-    color: #007bff;
+.editar {
+    background-color: #000000;
+    border-top: 5px;
+    color: #ffffff;
     text-decoration: none;
+    padding: 0.5rem 1rem;
 }
 
-a:hover {
-    color: #0056b3;
+.editar:hover {
+    background-color: #fff200;
+    color: #000000;
 }
 
 .profile-image {
@@ -111,6 +115,7 @@ form button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 5px;
 }
 
 form button:hover {

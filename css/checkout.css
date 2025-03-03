@@ -107,6 +107,7 @@ select:focus {
     color: #fff;
     text-decoration: none;
     padding: 0.5rem 1rem;
+    border-radius: 4px;
 }
 .Voltar:hover{
     background-color: #fff200;

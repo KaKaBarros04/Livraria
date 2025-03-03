@@ -42,32 +42,43 @@ nav a:hover {
 main {
     flex-grow: 1;
 }
-
 footer {
     background-color: #000000;
     color: #fff;
     text-align: center;
     padding: 1rem;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+p{
+
 }
 .div-btn{
     margin-bottom: 5px;
 }
 .btn{
-    background-color: black;
-    color: #fff;
+    padding: 5px 10px;
+    background-color: #000000;
+    color: #fff200;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
     text-decoration: none;
-    padding: 0.5rem 1rem;
 }
 .btn:hover{
     background-color: #fff200;
     color: #000000;
 }
-.table{
-    width: 80%; /* Define a largura da tabela */
-            margin: 0 auto; /* Centraliza a tabela na página */
-            border-collapse: collapse;
-            margin-left: 37%;
+.table {
+    width: 60%; /* Ajuste conforme necessário */
+    max-width: 480px; /* Evita que fique muito grande */
+    margin: 20px auto; /* Centraliza horizontalmente */
+    border-collapse: collapse;
+    padding: 10px;
+    overflow-x: auto; /* Permite rolagem horizontal se necessário */
 }
+
 th, td {
     padding: 10px; /* Espaço interno nas células */
     border: 1px solid #ddd; /* Define a borda da tabela */
@@ -76,4 +87,16 @@ th, td {
 .remover{
     text-decoration: none;
     color: red;
+}
+.buttonF{
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: none;
+    color: black;
+    background: #9d9d9d;
+}
+.buttonF:hover{
+    color: #9d9d9d;
+    background-color: #000000;
 }

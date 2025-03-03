@@ -134,6 +134,28 @@ if (isset($_GET['book_id'])) {
     <title>Checkout - Finalizar Compra</title>
     <link rel="stylesheet" href="./css/checkout.css">
     <link rel="icon" href="./imagens/shopping-bag-svgrepo-com.svg">
+    <script>
+        // Função para mostrar/ocultar os campos baseados no método de pagamento
+        function togglePaymentFields() {
+            var paymentMethod = document.getElementById("payment_method").value;
+
+            // Ocultar ambos os campos
+            document.getElementById("credit_card_fields").style.display = "none";
+            document.getElementById("mbway_fields").style.display = "none";
+
+            // Mostrar os campos de cartão de crédito ou MBWay dependendo da escolha
+            if (paymentMethod == "credit_card") {
+                document.getElementById("credit_card_fields").style.display = "block";
+            } else if (paymentMethod == "mbway") {
+                document.getElementById("mbway_fields").style.display = "block";
+            }
+        }
+
+        // Inicializar os campos no carregamento
+        window.onload = function() {
+            togglePaymentFields();  // Verificar o método de pagamento já selecionado na primeira vez
+        };
+    </script>
 </head>
 <body>
     <header>
@@ -162,7 +184,7 @@ if (isset($_GET['book_id'])) {
                 $result = $stmt->get_result();
 
                 if ($result && $result->num_rows > 0) {
-                    $book = $result->fetch_assoc();
+                    $book = $result->fetch_assoc(); 
             ?>
                 <tr>
                     <td><?php echo htmlspecialchars($book['title']); ?></td>
@@ -191,11 +213,27 @@ if (isset($_GET['book_id'])) {
             <input type="text" id="address" name="address" required><br><br>
 
             <label for="payment_method">Método de Pagamento:</label><br>
-            <select id="payment_method" name="payment_method" required>
+            <select id="payment_method" name="payment_method" required onchange="togglePaymentFields()">
                 <option value="credit_card">Cartão de Crédito</option>
-                <option value="boleto">Boleto Bancário</option>
+                <option value="mbway">MBway</option>
             </select><br><br>
+ <!-- Campos de Cartão de Crédito -->
+ <div id="credit_card_fields" style="display:none;">
+                <label for="card_number">Número do Cartão:</label><br>
+                <input type="text" id="card_number" name="card_number" placeholder="xxxx xxxx xxxx xxxx" required><br>
 
+                <label for="expiry_date">Data de Expiração:</label><br>
+                <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/AA" required><br>
+
+                <label for="cvv">CVV:</label><br>
+                <input type="text" id="cvv" name="cvv" placeholder="xxx" required><br><br>
+            </div>
+
+            <!-- Campos de MBWay -->
+            <div id="mbway_fields" style="display:none;">
+                <label for="phone_number">Número de Telefone:</label><br>
+                <input type="text" id="phone_number" name="phone_number" placeholder="Número MBWay" required><br><br>
+            </div>
             <input type="submit" name="confirm_order" value="Confirmar Compra">
         </form>
 

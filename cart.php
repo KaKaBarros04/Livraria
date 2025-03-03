@@ -89,7 +89,11 @@ if (isset($_GET['remove'])) {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJfQ2z8MXt6jPqGYO5yf3M1+Tl8Xq0bMjjcFrWEmya1P+vWo6dLrDQw9c0Q5" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+      rel="stylesheet" 
+      integrity="sha384-rbsA2VBKQhggPjUuNCwJWz6N+eoBuahhboXlZxP9LGIhzh5FZCSftdA4xU8iJ6gD" 
+      crossorigin="anonymous">
+
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="author" content="Kauan Benitez" />
     <meta name="keywords" content="livros, literatura, ficção, não-ficção, best-sellers, clássicos, livraria">
@@ -111,58 +115,59 @@ if (isset($_GET['remove'])) {
     <a href="Index.php">Inicio</a>
     <a href="produtos.php">Produtos</a>
     </nav>
-<div class="table">
-    <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
-        <table border="1">
-            <tr>
-                <th>Livro</th>
-                <th>Quantidade</th>
-                <th>Preço</th>
-                <th>Total</th>
-                <th>Ação</th>
-            </tr>
+        <div class="table">
+            <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
+                <table border="1">
+                    <tr>
+                        <th>Livro</th>
+                        <th>Quantidade</th>
+                        <th>Preço</th>
+                        <th>Total</th>
+                        <th>Ação</th>
+                    </tr>
 
             <?php
-            $total = 0;
-            foreach ($_SESSION['cart'] as $book_id => $item):
-                // Obter detalhes do livro do banco de dados
-                $sql = "SELECT title, price FROM books WHERE book_id = ?";
-                $stmt = mysqli_prepare($dbc, $sql);
-                mysqli_stmt_bind_param($stmt, "i", $book_id);
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-                $book = mysqli_fetch_assoc($result);
+                        $total = 0;
+                        foreach ($_SESSION['cart'] as $book_id => $item):
+                            // Obter detalhes do livro do banco de dados
+                            $sql = "SELECT title, price FROM books WHERE book_id = ?";
+                            $stmt = mysqli_prepare($dbc, $sql);
+                            mysqli_stmt_bind_param($stmt, "i", $book_id);
+                            mysqli_stmt_execute($stmt);
+                            $result = mysqli_stmt_get_result($stmt);
+                            $book = mysqli_fetch_assoc($result);
 
-                // Verificar se o livro foi encontrado no banco de dados
-                if (!$book) {
-                   
-                    continue; // Pula para o próximo item do carrinho
-                }
-            ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($book['title']); ?></td>
-                    <td><?php echo $item['quantity']; ?></td>
-                    <td>€ <?php echo number_format($book['price'], 2, ',', '.'); ?></td>
-                    <td>€ <?php echo number_format($book['price'] * $item['quantity'], 2, ',', '.'); ?></td>
-                    <td><a href="?remove=<?php echo $book_id; ?>" class="remover"><b>Remover</b></a></td>
-                </tr>
-            <?php
-                $total += $book['price'] * $item['quantity'];
-            endforeach;
-            ?>
+                            // Verificar se o livro foi encontrado no banco de dados
+                            if (!$book) {
+                            
+                                continue; // Pula para o próximo item do carrinho
+                            }
+                        ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($book['title']); ?></td>
+                                <td><?php echo $item['quantity']; ?></td>
+                                <td>€ <?php echo number_format($book['price'], 2, ',', '.'); ?></td>
+                                <td>€ <?php echo number_format($book['price'] * $item['quantity'], 2, ',', '.'); ?></td>
+                                <td><a href="?remove=<?php echo $book_id; ?>" class="remover"><b>Remover</b></a></td>
+                            </tr>
+                            <?php
+                                $total += $book['price'] * $item['quantity'];
+                            endforeach;
+                            ?>
 
-        </table>
-        </div>
+                </table>
+                        </div>
         <h2>Total: €<?php echo number_format($total, 2, ',', '.'); ?></h2>
 
         <form action="checkout.php" method="POST">
-            <input type="submit" value="Finalizar Compra">
+            <input class="buttonF" type="submit" value="Finalizar Compra">
         </form>
     <?php else: ?>
+        </div>    
         <p>Seu carrinho está vazio.</p>
     <?php endif; ?>
 
-    <br>
+    
         <div class="div-btn"><a href="index.php" class="btn">Continuar comprando</a></div>
     
 

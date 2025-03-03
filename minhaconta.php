@@ -12,7 +12,7 @@ include("conexão.php");
 // Obtém os dados do usuário logado
 $user_id = $_SESSION['user']['id'];
 
-$query = $dbc->prepare("SELECT nome, email, profile_image FROM users WHERE user_id = ?");
+$query = $dbc->prepare("SELECT nome, email, profile_image, phone_number FROM users WHERE user_id = ?");
 $query->bind_param("i", $user_id);
 $query->execute();
 $result = $query->get_result();
@@ -47,6 +47,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_image'])) {
         }
     } else {
         $_SESSION['error_message'] = "O arquivo não é uma imagem válida.";
+    }
+}
+
+// Verifica se o formulário foi enviado
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['phone_number'])) {
+    $phone = trim($_POST['phone_number']);  // Obtém o número de telefone enviado pelo formulário
+
+    // Validação do número de telefone
+    if (empty($phone)) {
+        $_SESSION['error_message'] = "Por favor, insira um número de telefone.";
+    } elseif (!preg_match('/^\+?[0-9]{10,15}$/', $phone)) {
+        // Validando o formato do número de telefone (aceita números com 10 a 15 dígitos e opcionalmente o '+')
+        $_SESSION['error_message'] = "Adicione um numero de telefone. Por favor, use um formato válido.";
+    } else {
+        // Atualiza o número de telefone no banco de dados
+        $user_id = $_SESSION['user']['id'];  // Pega o ID do usuário logado na sessão
+        $update_query = $dbc->prepare("UPDATE users SET phone_number = ? WHERE user_id = ?");
+        $update_query->bind_param("si", $phone, $user_id);  // 's' para string e 'i' para inteiro
+
+        if ($update_query->execute()) {
+            // Atualiza o número de telefone na variável de sessão
+            $_SESSION['user']['phone_number'] = $phone;
+            $_SESSION['success_message'] = "Número de telefone atualizado com sucesso!";
+        } else {
+            $_SESSION['error_message'] = "Erro ao atualizar o número de telefone.";
+        }
     }
 }
 ?>
@@ -101,8 +127,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_image'])) {
         <div class="dados-usuario">
             <p><strong>Nome:</strong> <?= htmlspecialchars($user['nome']) ?></p>
             <p><strong>Email:</strong> <?= htmlspecialchars($user['email']) ?></p>
+            <p><strong>Nº de telefone:</strong> <?= htmlspecialchars($user['phone_number'])?></p>
         </div>
-
+         <!-- Formulário para atualizar o número de telefone -->
+    <form action="minhaconta.php" method="POST">
+        <label for="phone_number">Número de Telefone:</label><br>
+        <input type="text" id="phone_number" name="phone_number" value="<?php echo isset($_SESSION['user']['phone_number']) ? htmlspecialchars($_SESSION['user']['phone_number']) : ''; ?>" required><br><br>
+        <input type="submit" value="Atualizar Número">
+    </form>
         <!-- Formulário de upload de foto -->
         <form action="minhaconta.php" method="POST" enctype="multipart/form-data">
             <label for="profile_image">Alterar Foto de Perfil:</label>
@@ -110,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_image'])) {
             <button type="submit">Alterar Foto</button>
         </form>
 
-        <a href="editarconta.php">Editar Informações</a>
+        <a class="editar" href="editarconta.php">Editar Informações</a>
     </section>
 </main>
 
