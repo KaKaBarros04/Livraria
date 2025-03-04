@@ -37,29 +37,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $login_password = trim($_POST['login_senha']);
 
     // Criar a consulta segura usando Prepared Statements
-    $query = mysqli_prepare($dbc, "SELECT user_id, nome, senha FROM users WHERE email = ?");
+    $query = mysqli_prepare($dbc, "SELECT user_id, nome, senha, tipo_usuario FROM users WHERE email = ?");
     mysqli_stmt_bind_param($query, 's', $login_email);
     mysqli_stmt_execute($query);
     $result = mysqli_stmt_get_result($query);
 
     // Verificar se o e-mail existe e validar senha
+    
+    // Verificar se o e-mail existe e validar senha
     if ($row = mysqli_fetch_assoc($result)) {
         if (password_verify($login_password, $row['senha'])) {
             $_SESSION['user'] = [
                 'id' => $row['user_id'],
-                'name' => $row['nome']
+                'name' => $row['nome'],
+                'tipo_usuario' => $row['tipo_usuario']  // Corrigir o nome da coluna
             ];
-            header("Location: Index.php");
+            // Redirecionar conforme o tipo de usuário
+            if ($row['tipo_usuario'] == 'admin') {
+                // Se for admin, redireciona para a página do admin
+                header("Location: AdmLi.php");
+            } else {
+                // Se for cliente, redireciona para a página inicial
+                header("Location: Index.php");
+            }
+            exit();
+        } else {
+            // Se a senha estiver incorreta
+            $_SESSION['login_error'] = "Senha incorreta!";
+            header("Location: login.php");
             exit();
         }
+    } else {
+        // Se o e-mail não for encontrado
+        $_SESSION['login_error'] = "E-mail não encontrado!";
+        header("Location: login.php");
+        exit();
     }
-
-    
-    
-    // Se falhar, mensagem genérica
-    $_SESSION['login_error'] = "E-mail ou senha inválidos!";
-    header("Location: login.php");
-    exit();
 
 } else {
     http_response_code(403);
@@ -67,5 +80,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-?>
 
+?>

@@ -77,7 +77,7 @@ $sub_categories_result = $dbc->query($sub_categories_query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empower Books Adm</title>
     <link rel="stylesheet" href="./css/styleadm.css">
-    <link rel="icon" href="./imagens/book-solid.svg">
+    <link rel="icon" href="./imagens/administration-job-with-archive-svgrepo-com.svg">
 </head>
 <body>
     <header>
@@ -94,9 +94,9 @@ $sub_categories_result = $dbc->query($sub_categories_query);
         <div class="user-dropdown">
             <img class="user-img" src="./imagens/user.jpg" alt="">
             <div class="dropdown-content">
-                <a href="#">Ver conta</a>
+                <a href="minhaconta_adm.php">Ver conta</a>
                 <a href="redefinir.php">Redefinir senha</a>
-                <a href="Index.php">Sair</a>
+                <a href="logout.php">Sair</a>
             </div>
         </div>
         

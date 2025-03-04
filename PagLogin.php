@@ -62,8 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_stmt_execute($stmt);
 
     if (mysqli_affected_rows($dbc) > 0) {
-        $_SESSION['registro_sucesso'] = "registro realizado com sucesso!";
+        $_SESSION['registro_sucesso'] = "Registro realizado com sucesso!";
         $_SESSION['chave_validacao'] = $chaveValidacao;
+        $_SESSION['mostrarDiv'] = true; // Define para mostrar a div
         header("Location: PagLogin.php");
         exit();
     } else {
@@ -155,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </label>
                 <label class="label-input" for="">
                     <i class="fa-regular fa-user icon-modify"></i>
-                    <input type="text" name="apelido" id="username" placeholder="Apelido" maxlength="50">
+                    <input type="text" name="apelido" id="username2" placeholder="Apelido" maxlength="50">
                 </label>
                 <label class="label-input" for="">
                     <i class="fa-regular fa-envelope icon-modify"></i>

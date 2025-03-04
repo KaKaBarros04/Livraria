@@ -1,6 +1,11 @@
 <?php
 include('conexão.php');
 session_start();
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit;
+}
+
 
 // Função para calcular o total do carrinho
 function calculateTotal() {
@@ -207,10 +212,10 @@ if (isset($_GET['book_id'])) {
         <h2>Informações de Pagamento</h2>
         <form action="checkout.php" method="POST">
             <label for="name">Nome completo:</label><br>
-            <input type="text" id="Nome" name="name" required><br>
+            <input type="text" id="Nome" name="name" autocomplete="name" required><br>
 
             <label for="address">Endereço de Entrega:</label><br>
-            <input type="text" id="address" name="address" required><br><br>
+            <input type="text" id="address" name="address" autocomplete="street-address" required><br><br>
 
             <label for="payment_method">Método de Pagamento:</label><br>
             <select id="payment_method" name="payment_method" required onchange="togglePaymentFields()">
@@ -220,10 +225,10 @@ if (isset($_GET['book_id'])) {
  <!-- Campos de Cartão de Crédito -->
  <div id="credit_card_fields" style="display:none;">
                 <label for="card_number">Número do Cartão:</label><br>
-                <input type="text" id="card_number" name="card_number" placeholder="xxxx xxxx xxxx xxxx" required><br>
+                <input type="text" id="card_number" name="card_number" placeholder="xxxx xxxx xxxx xxxx"  required><br>
 
                 <label for="expiry_date">Data de Expiração:</label><br>
-                <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/AA" required><br>
+                <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/AA"  required><br>
 
                 <label for="cvv">CVV:</label><br>
                 <input type="text" id="cvv" name="cvv" placeholder="xxx" required><br><br>
@@ -232,7 +237,7 @@ if (isset($_GET['book_id'])) {
             <!-- Campos de MBWay -->
             <div id="mbway_fields" style="display:none;">
                 <label for="phone_number">Número de Telefone:</label><br>
-                <input type="text" id="phone_number" name="phone_number" placeholder="Número MBWay" required><br><br>
+                <input type="text" id="phone_number" name="phone_number" placeholder="Número MBWay" autocomplete="tel" required><br><br>
             </div>
             <input type="submit" name="confirm_order" value="Confirmar Compra">
         </form>
