@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27-Fev-2025 às 19:32
+-- Tempo de geração: 04-Mar-2025 às 21:45
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -39,34 +39,35 @@ CREATE TABLE `books` (
   `image` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `archived_at` datetime DEFAULT NULL
+  `archived_at` datetime DEFAULT NULL,
+  `views` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `books`
 --
 
-INSERT INTO `books` (`book_id`, `title`, `author`, `description`, `price`, `stock`, `category_id`, `sub_category_id`, `image`, `created_at`, `updated_at`, `archived_at`) VALUES
-(1, 'O Senhor dos Anéis', 'J.R.R. Tolkien', 'Uma obra clássica da fantasia.', 59.90, 20, 1, 1, 'imagens/senhor-dos-aneis.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:01', NULL),
-(2, '1984', 'George Orwell', 'Uma visão distópica do futuro.', 39.90, 15, 1, 2, 'imagens/1984.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:14', NULL),
-(3, 'Sapiens', 'Yuval Noah Harari', 'Uma breve história da humanidade.', 45.00, 10, 2, 3, 'imagens/sapiens.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:22', NULL),
-(4, 'Orgulho e Preconceito', 'Jane Austen', 'Um romance clássico.', 29.90, 25, 3, 4, 'imagens/orgulho-e-preconceito.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:33', NULL),
-(5, 'A Ilha do Tesouro', 'Robert Louis Stevenson', 'Uma aventura pirata inesquecível.', 34.50, 18, 4, 5, 'imagens/ilha-do-tesouro.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:42', NULL),
-(6, 'It: A Coisa', 'Stephen King', 'Um grupo de amigos enfrenta um ser aterrorizante que assume a forma de seus piores medos.', 54.90, 12, 5, 6, 'imagens/it.jpg', '2025-02-19 14:03:00', '2025-02-19 19:33:51', NULL),
-(12, 'O Chamado de Cthulhu', 'H.P. Lovecraft', 'Uma história sobre loucura e seres cósmicos além da compreensão humana.', 35.90, 8, 5, 5, 'imagens/cthulhu.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL),
-(13, 'O Silêncio dos Inocentes', 'Thomas Harris', 'A agente do FBI Clarice Starling precisa lidar com o genial e assustador Hannibal Lecter.', 45.00, 10, 6, 7, 'imagens/silencio-inocentes.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL),
-(14, 'Mindset: A Nova Psicologia do Sucesso', 'Carol S. Dweck', 'Um livro sobre a importância do crescimento pessoal através da mentalidade certa.', 49.90, 20, 7, 9, 'imagens/mindset.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL),
-(15, 'O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Uma história encantadora sobre amizade, amor e descobertas.', 29.90, 30, 8, 11, 'imagens/pequeno-principe.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL),
-(16, 'Steve Jobs', 'Walter Isaacson', 'A biografia definitiva de um dos maiores visionários da tecnologia.', 59.90, 15, 9, 13, 'imagens/steve-jobs.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL),
-(17, 'Batman: O Cavaleiro das Trevas', 'Frank Miller', 'Uma releitura sombria e icônica do herói Batman.', 64.90, 18, 10, 16, 'imagens/batman.jpg', '2025-02-19 14:03:00', '2025-02-26 00:10:50', NULL),
-(18, 'One Piece - Volume 1', 'Eiichiro Oda', 'O início da grande aventura de Luffy e sua tripulação.', 22.90, 50, 10, 17, 'imagens/one-piece.jpg', '2025-02-19 14:03:00', '2025-02-26 00:10:30', NULL),
-(19, 'O Príncipe', 'Nicolau Maquiavel', 'Um polémico e universal tratado filosófico que encerra o segredo para a arte de bem governar.', 19.90, 5, 9, 3, 'imagens/o-principe.jpg', '2025-02-19 19:38:35', '2025-02-19 19:48:48', NULL),
-(20, 'De Pobre a Milionário', 'Celso Lascasas', 'Celso Lascasas, fundador das lojas de mobiliário Laskasas e empreendedor, traz-nos nestas páginas muito mais do que a história de uma vida conquistada a pulso. De Pobre a Milionário é também um manancial de importantes lições de empreendedorismo. E isso só é possível para alguém que passou do duro trabalho braçal para o duro trabalho de ser um empreendedor.', 17.99, 5, 9, 14, 'imagens/pobre-a-milionario.jpg', '2025-02-25 23:51:24', '2025-02-26 02:03:53', NULL),
-(21, 'Caçador Sem Coração', ' Kristen Ciccarelli', 'Na noite em que uma devastadora revolução derruba as bruxas, a vida de Rune muda para sempre. Agora, as bruxas são caçadas e executadas, e para sobreviver ela precisa de esconder quem realmente é. Durante o dia, a jovem fi nge ser apenas uma socialite fútil, mas à noite torna-se na Mariposa Escarlate, uma vingadora que salva bruxas da purga que se abateu sobre o reino. Porém, quando um dos resgates corre mal, ela tem de despistar os perseguidores e conseguir a informação de que precisa. E a solução é cortejar o belo e impiedoso Gideon Sharpe, um dos mais famosos caçadores de bruxas.', 17.99, 8, 1, 1, 'imagens/cacador-sem-coracao.jpg', '2025-02-25 23:55:06', '2025-02-26 00:01:38', NULL),
-(22, 'Espiritualidade E Autoajuda', 'Pe. Roque Schneider', 'Este ebook se configura como uma espécie de roteiro orante, alicerçada em pequenas reflexões diárias, com o objetivo de oferecer ao leitor uma forma de conectar-se com Deus, o que, como bem se sabe, é terapêutico e salutar. O autor, bastante conhecido por seus inúmeros livros e por seus programas no rádio e na TV, buscou inspiração em sua bagagem intelectual, formada por textos acadêmicos e literários, para mostrar que todos têm, dentro de si mesmos, a solução para triunfar sobre os obstáculos e fazer da sua existência a mais rica das trajetórias humanas. Assim, com fé em Deus e iluminados por suas luzes interiores, este livro, repleto de palavras de sabedoria, fraternidade e esperança mostrará aos leitores novos caminhos e horizontes para o dia a dia.', 2.99, 16, 7, 11, 'imagens/espiritualidade-e-autoajuda.jpg', '2025-02-26 00:05:41', '2025-02-26 00:05:41', NULL),
-(23, 'Não Há Impossíveis', 'Paulo Azevedo e Paulo M. Morais', '«Podia ser pior», disse a sua mãe, aos 16 anos, quando percebeu que tinha acabado de dar à luz uma criança sem mãos e sem pernas. Começou a escrever-se assim a história daquele que é hoje o protagonista das mais poderosas palestras motivacionais do país. Condenado a nunca conseguir caminhar, a uma vida de total dependência e a não cumprir sonho algum, Paulo Azevedo rejeitou desde cedo, com um extraordinário (...)\r\n', 13.29, 6, 7, 10, 'imagens/nao-ha-impossiveis.jpg', '2025-02-26 00:08:43', '2025-02-26 00:08:43', NULL),
-(24, 'Pessoa. Uma Biografia', 'Richard Zenith', '\r\nFernando Pessoa é, a par de Luís de Camões, o maior poeta português. E é uma das figuras proeminentes do modernismo europeu, juntamente com escritores como Kafka, Joyce e Proust. O seu vastíssimo legado - da poesia, drama e ficção ao artigo de opinião e escrita mediúnica, cruzando e aprofundando inúmeros domínios do conhecimento (da literatura à religião, passando pela história, a filosofia, a astrologia e tantos outros) - tem vindo a ser progressivamente conhecido pelos leitores portugueses e de todo o mundo.', 23.99, 3, 9, 14, 'imagens/pessoa.jpg', '2025-02-26 00:13:08', '2025-02-26 02:00:10', NULL),
-(25, 'O Pai e Eu', 'Maria Teresa Maia Gonzalez', 'Quando dissemos a nossa primeira palavra, o Pai foi logo contar a novidade a toda a gente que conhecia (e era a palavra «Mamã»)!', 5.99, 8, 8, 12, 'imagens/o-pai-e-eu.jpg', '2025-02-26 00:38:34', '2025-02-26 00:38:34', NULL);
+INSERT INTO `books` (`book_id`, `title`, `author`, `description`, `price`, `stock`, `category_id`, `sub_category_id`, `image`, `created_at`, `updated_at`, `archived_at`, `views`) VALUES
+(1, 'O Senhor dos Anéis', 'J.R.R. Tolkien', 'Uma obra clássica da fantasia.', 59.90, 20, 1, 1, 'imagens/senhor-dos-aneis.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:01', NULL, 0),
+(2, '1984', 'George Orwell', 'Uma visão distópica do futuro.', 39.90, 15, 1, 2, 'imagens/1984.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:14', NULL, 0),
+(3, 'Sapiens', 'Yuval Noah Harari', 'Uma breve história da humanidade.', 45.00, 10, 2, 3, 'imagens/sapiens.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:22', NULL, 0),
+(4, 'Orgulho e Preconceito', 'Jane Austen', 'Um romance clássico.', 29.90, 25, 3, 4, 'imagens/orgulho-e-preconceito.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:33', NULL, 0),
+(5, 'A Ilha do Tesouro', 'Robert Louis Stevenson', 'Uma aventura pirata inesquecível.', 34.50, 18, 4, 5, 'imagens/ilha-do-tesouro.jpg', '2025-02-19 13:47:23', '2025-02-19 19:33:42', NULL, 0),
+(6, 'It: A Coisa', 'Stephen King', 'Um grupo de amigos enfrenta um ser aterrorizante que assume a forma de seus piores medos.', 54.90, 12, 5, 6, 'imagens/it.jpg', '2025-02-19 14:03:00', '2025-02-19 19:33:51', NULL, 0),
+(12, 'O Chamado de Cthulhu', 'H.P. Lovecraft', 'Uma história sobre loucura e seres cósmicos além da compreensão humana.', 35.90, 8, 5, 5, 'imagens/cthulhu.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL, 0),
+(13, 'O Silêncio dos Inocentes', 'Thomas Harris', 'A agente do FBI Clarice Starling precisa lidar com o genial e assustador Hannibal Lecter.', 45.00, 10, 6, 7, 'imagens/silencio-inocentes.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL, 0),
+(14, 'Mindset: A Nova Psicologia do Sucesso', 'Carol S. Dweck', 'Um livro sobre a importância do crescimento pessoal através da mentalidade certa.', 49.90, 20, 7, 9, 'imagens/mindset.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL, 0),
+(15, 'O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Uma história encantadora sobre amizade, amor e descobertas.', 29.90, 30, 8, 11, 'imagens/pequeno-principe.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL, 0),
+(16, 'Steve Jobs', 'Walter Isaacson', 'A biografia definitiva de um dos maiores visionários da tecnologia.', 59.90, 15, 9, 13, 'imagens/steve-jobs.jpg', '2025-02-19 14:03:00', '2025-02-19 14:03:00', NULL, 0),
+(17, 'Batman: O Cavaleiro das Trevas', 'Frank Miller', 'Uma releitura sombria e icônica do herói Batman.', 64.90, 18, 10, 16, 'imagens/batman.jpg', '2025-02-19 14:03:00', '2025-02-26 00:10:50', NULL, 0),
+(18, 'One Piece - Volume 1', 'Eiichiro Oda', 'O início da grande aventura de Luffy e sua tripulação.', 22.90, 50, 10, 17, 'imagens/one-piece.jpg', '2025-02-19 14:03:00', '2025-02-26 00:10:30', NULL, 0),
+(19, 'O Príncipe', 'Nicolau Maquiavel', 'Um polémico e universal tratado filosófico que encerra o segredo para a arte de bem governar.', 19.90, 5, 9, 3, 'imagens/o-principe.jpg', '2025-02-19 19:38:35', '2025-02-19 19:48:48', NULL, 0),
+(20, 'De Pobre a Milionário', 'Celso Lascasas', 'Celso Lascasas, fundador das lojas de mobiliário Laskasas e empreendedor, traz-nos nestas páginas muito mais do que a história de uma vida conquistada a pulso. De Pobre a Milionário é também um manancial de importantes lições de empreendedorismo. E isso só é possível para alguém que passou do duro trabalho braçal para o duro trabalho de ser um empreendedor.', 17.99, 5, 9, 14, 'imagens/pobre-a-milionario.jpg', '2025-02-25 23:51:24', '2025-02-26 02:03:53', NULL, 0),
+(21, 'Caçador Sem Coração', ' Kristen Ciccarelli', 'Na noite em que uma devastadora revolução derruba as bruxas, a vida de Rune muda para sempre. Agora, as bruxas são caçadas e executadas, e para sobreviver ela precisa de esconder quem realmente é. Durante o dia, a jovem fi nge ser apenas uma socialite fútil, mas à noite torna-se na Mariposa Escarlate, uma vingadora que salva bruxas da purga que se abateu sobre o reino. Porém, quando um dos resgates corre mal, ela tem de despistar os perseguidores e conseguir a informação de que precisa. E a solução é cortejar o belo e impiedoso Gideon Sharpe, um dos mais famosos caçadores de bruxas.', 17.99, 8, 1, 1, 'imagens/cacador-sem-coracao.jpg', '2025-02-25 23:55:06', '2025-02-26 00:01:38', NULL, 0),
+(22, 'Espiritualidade E Autoajuda', 'Pe. Roque Schneider', 'Este ebook se configura como uma espécie de roteiro orante, alicerçada em pequenas reflexões diárias, com o objetivo de oferecer ao leitor uma forma de conectar-se com Deus, o que, como bem se sabe, é terapêutico e salutar. O autor, bastante conhecido por seus inúmeros livros e por seus programas no rádio e na TV, buscou inspiração em sua bagagem intelectual, formada por textos acadêmicos e literários, para mostrar que todos têm, dentro de si mesmos, a solução para triunfar sobre os obstáculos e fazer da sua existência a mais rica das trajetórias humanas. Assim, com fé em Deus e iluminados por suas luzes interiores, este livro, repleto de palavras de sabedoria, fraternidade e esperança mostrará aos leitores novos caminhos e horizontes para o dia a dia.', 2.99, 16, 7, 11, 'imagens/espiritualidade-e-autoajuda.jpg', '2025-02-26 00:05:41', '2025-02-26 00:05:41', NULL, 0),
+(23, 'Não Há Impossíveis', 'Paulo Azevedo e Paulo M. Morais', '«Podia ser pior», disse a sua mãe, aos 16 anos, quando percebeu que tinha acabado de dar à luz uma criança sem mãos e sem pernas. Começou a escrever-se assim a história daquele que é hoje o protagonista das mais poderosas palestras motivacionais do país. Condenado a nunca conseguir caminhar, a uma vida de total dependência e a não cumprir sonho algum, Paulo Azevedo rejeitou desde cedo, com um extraordinário (...)\r\n', 13.29, 6, 7, 10, 'imagens/nao-ha-impossiveis.jpg', '2025-02-26 00:08:43', '2025-02-26 00:08:43', NULL, 0),
+(24, 'Pessoa. Uma Biografia', 'Richard Zenith', '\r\nFernando Pessoa é, a par de Luís de Camões, o maior poeta português. E é uma das figuras proeminentes do modernismo europeu, juntamente com escritores como Kafka, Joyce e Proust. O seu vastíssimo legado - da poesia, drama e ficção ao artigo de opinião e escrita mediúnica, cruzando e aprofundando inúmeros domínios do conhecimento (da literatura à religião, passando pela história, a filosofia, a astrologia e tantos outros) - tem vindo a ser progressivamente conhecido pelos leitores portugueses e de todo o mundo.', 23.99, 3, 9, 14, 'imagens/pessoa.jpg', '2025-02-26 00:13:08', '2025-02-26 02:00:10', NULL, 0),
+(25, 'O Pai e Eu', 'Maria Teresa Maia Gonzalez', 'Quando dissemos a nossa primeira palavra, o Pai foi logo contar a novidade a toda a gente que conhecia (e era a palavra «Mamã»)!', 5.99, 8, 8, 12, 'imagens/o-pai-e-eu.jpg', '2025-02-26 00:38:34', '2025-02-26 00:38:34', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -133,7 +134,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `total_price`, `status`, `delivery_address`, `payment_method`, `created_at`, `updated_at`) VALUES
-(1, 3, '2025-02-27 18:31:31', 39.90, 'pending', 'Rua Alfredo Keil 3, Almada', 'credit_card', '2025-02-27 18:31:31', '2025-02-27 18:31:31');
+(1, 3, '2025-02-27 18:31:31', 39.90, 'pending', 'Rua Alfredo Keil 3, Almada', 'credit_card', '2025-02-27 18:31:31', '2025-02-27 18:31:31'),
+(2, 6, '2025-02-27 18:37:06', 115.70, 'pending', 'Rua Alfredo Keil 3, Almada', 'credit_card', '2025-02-27 18:37:06', '2025-02-27 18:37:06');
 
 -- --------------------------------------------------------
 
@@ -154,7 +156,9 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`order_item_id`, `order_id`, `book_id`, `quantity`, `price`) VALUES
-(1, 1, 2, 1, 39.90);
+(1, 1, 2, 1, 39.90),
+(2, 2, 2, 2, 39.90),
+(3, 2, 12, 1, 35.90);
 
 -- --------------------------------------------------------
 
@@ -212,18 +216,18 @@ CREATE TABLE `users` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `chave_validacao` varchar(255) NOT NULL,
-  `profile_image` varchar(255) DEFAULT NULL
+  `profile_image` varchar(255) DEFAULT NULL,
+  `tipo_usuario` enum('admin','cliente') NOT NULL DEFAULT 'cliente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `senha`, `nome`, `apelido`, `phone_number`, `role`, `created_at`, `updated_at`, `chave_validacao`, `profile_image`) VALUES
-(1, '', 'kauanbenitez04@gmail.com', '$2y$10$iDlW1w0mIaHYIrhP6BpGB.jG6xU4wkySpXMObqBseQWIZTQRf6qmq', 'Kauan', 'Benitez', NULL, 'user', '2025-02-18 21:19:49', '2025-02-18 21:19:49', 'YL4M73s', NULL),
-(3, '', 'kauanbenitez4@gmail.com', '$2y$10$Xxv/sdf3bSjGr2znzW1ho.ho7N.boDSt3/Kh2yklZTjX9Y5XAatGe', 'KaKa', 'brs', NULL, 'user', '2025-02-26 00:45:12', '2025-02-27 18:27:36', 'yIdDPjn', 'imagens/14.jpg'),
-(4, '', 'maravidal888@gmail.com', '$2y$10$qgS/rIRD95Xtj5o1VknlROruAB70ZUdd3OsutphqnQ6mAOun83SHe', 'KK', 'Benitez', NULL, 'user', '2025-02-26 02:33:28', '2025-02-26 02:33:28', '78f819a', NULL),
-(5, '', 'kauanbenitez46@gmail.com', '$2y$10$z/Ok4X.mWwH9DxI3LbtqFOLaqJxkycEC5O407Vvlnu40wc.ydO0ce', 'KK', 'Benitez', NULL, 'user', '2025-02-26 02:35:08', '2025-02-26 02:35:08', '09ba0ae', NULL);
+INSERT INTO `users` (`user_id`, `username`, `email`, `senha`, `nome`, `apelido`, `phone_number`, `role`, `created_at`, `updated_at`, `chave_validacao`, `profile_image`, `tipo_usuario`) VALUES
+(3, '', 'kauanbenitez4@gmail.com', '$2y$10$Xxv/sdf3bSjGr2znzW1ho.ho7N.boDSt3/Kh2yklZTjX9Y5XAatGe', 'KaKa', 'brs', NULL, 'user', '2025-02-26 00:45:12', '2025-02-27 18:27:36', 'yIdDPjn', 'imagens/14.jpg', 'cliente'),
+(6, '', 'kauanbenitez04@gmail.com', '$2y$10$uOZxEbukyr1A4uiTXdnoe.zCEKnn7vVOCOtl3Wya78iy3D5Uw/oF6', 'Kauan', 'Benitez', '+351935610979', 'user', '2025-02-27 18:35:46', '2025-03-03 22:01:57', '35f4097', 'imagens/IMG_20230413_181721.jpg', 'cliente'),
+(8, '', 'kauanbenitez46@gmail.com', '$2y$10$oQ46TSGBvQQa0U9T5Kfoleb/z2Fh3WebjhjjJEUtLQlmJ3iff6fnC', 'KK', 'Ben', NULL, 'user', '2025-03-04 13:21:55', '2025-03-04 13:58:48', '59c4901', 'imagens/20221206_084143.jpg', 'admin');
 
 --
 -- Índices para tabelas despejadas
@@ -306,13 +310,13 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de tabela `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `subcategoria`
@@ -324,7 +328,7 @@ ALTER TABLE `subcategoria`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restrições para despejos de tabelas
